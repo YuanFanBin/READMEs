@@ -25,7 +25,7 @@ ref: https://www.linode.com/docs/databases/mysql/how-to-install-mysql-on-centos-
 ```sh
 $ sudo yum install iptables-services
 $ systemctl status iptables.service
-°Ò iptables.service - IPv4 firewall with iptables
+‚óè iptables.service - IPv4 firewall with iptables
    Loaded: loaded (/usr/lib/systemd/system/iptables.service; disabled; vendor preset: disabled)
    Active: inactive (dead)
 $ systemctl stop firewalld.service      # CLOSE

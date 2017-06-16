@@ -2,6 +2,8 @@
 
 ## zabbix 3.0.9
 
+ref: http://www.jianshu.com/p/4d98ff87db5f
+
 ### mysql
 
 ```sql
@@ -11,10 +13,10 @@ GRANT ALL PRIVILEGES ON zabbix.* 'zabbix'@'localhost';
 ### BUG
 
 ```log
-A non well formed numeric value encountered [zabbix.php:21 ¡ú require_once() ¡ú ZBase->run() ¡ú ZBase->processRequest() ¡ú CView->getOutput() ¡ú include() ¡ú make_status_of_zbx() ¡ú CFrontendSetup->checkRequirements() ¡ú CFrontendSetup->checkPhpMemoryLimit() ¡ú str2mem() in include/func.inc.php:410]
+A non well formed numeric value encountered [zabbix.php:21 â†’ require_once() â†’ ZBase->run() â†’ ZBase->processRequest() â†’ CView->getOutput() â†’ include() â†’ make_status_of_zbx() â†’ CFrontendSetup->checkRequirements() â†’ CFrontendSetup->checkPhpMemoryLimit() â†’ str2mem() in include/func.inc.php:410]
 ```
 
-    °²×°Íê³ÉÖ®ºóÆô¶¯¾Í³öÏÖÕâ¸öÎÊÌâ£¬Õâ¸öÊÇÒòÎªPHP 7.1.0ÀàĞÍÇ¿»¯£¬´¦Àí·½·¨Ò²ºÜ¼òµ¥ÕÒµ½Zabbix WEBÄ¿Â¼ÏÂinclude/func.inc.phpÎÄ¼ş
+    å®‰è£…å®Œæˆä¹‹åå¯åŠ¨å°±å‡ºç°è¿™ä¸ªé—®é¢˜ï¼Œè¿™ä¸ªæ˜¯å› ä¸ºPHP 7.1.0ç±»å‹å¼ºåŒ–ï¼Œå¤„ç†æ–¹æ³•ä¹Ÿå¾ˆç®€å•æ‰¾åˆ°Zabbix WEBç›®å½•ä¸‹include/func.inc.phpæ–‡ä»¶
 
 ```sh
 $ sed -i '/$last = strtolower(substr($val, -1));/a$val = substr($val,0,-1);' /var/www/zabbix/include/func.inc.php
@@ -23,8 +25,7 @@ $ sed -i '/$last = strtolower(substr($val, -1));/a$val = substr($val,0,-1);' /va
 ### test
 
 ```sh
-$  curl -i -X POST -H 'Content-Type:application/json' -d'{"jsonrpc": "2.0","method":"user.login","params":{"user":"Admin","password":"zabbix"},"auth": null,"id":0}' http://192.168.1.88/api_jsonrpc.php
+$  curl -i -X POST -H 'Content-Type:application/json' -d'{"jsonrpc": "2.0","method":"user.login","params":{"user":"Admin","password":"zabbix"},"auth": null,"id":0}' http://192.168.1.88/zabbix/api_jsonrpc.php
 ```
 
 ref: http://www.linuxidc.com/Linux/2017-02/140146.htm
-     http://www.jianshu.com/p/4d98ff87db5f
