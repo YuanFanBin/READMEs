@@ -109,7 +109,7 @@ $ sudo grub-mkconfig -o /boot/grub/grub.cfg     # 重新生成grub引导
 $ sudo reboot
 ```
 
-参考资料：https://superuser.com/questions/528975/dual-boot-archlinux-and-windows-7-using-grub-bios
+ref: [Dual-boot archlinux and Windows 7 using grub-bios](https://superuser.com/questions/528975/dual-boot-archlinux-and-windows-7-using-grub-bios)
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
@@ -170,7 +170,7 @@ $ sudo pacman nodejs npm yarn                       # for web dev
 ## 软件
 
 ```sh
-sudo pacman -Sy nginx php-fpm
+$ sudo pacman -Sy nginx php-fpm
 ```
 
 ## APP
@@ -195,29 +195,32 @@ $ yaourt tldr                        # https://github.com/tldr-pages/tldr
 $ sudo pacman -S httpie              # https://httpie.org/
 $ sudo pacman -S jq                  # https://stedolan.github.io/jq/
 $ yaourt musicbox                    # https://github.com/darknessomi/musicbox
+$ sudo pacman -S tree
 ```
 
 # 5. i3
 
-先使用这个配置 https://github.com/ivyl/i3-config
+先使用这个配置 [ivyl/i3-config](https://github.com/ivyl/i3-config)
 
 ```sh
 $ sudo pacman -Sy i3 i3status feh
 $ yaourt urxvt
 $ sudo pacman -Sy unclutter udiskie dunst pulseaudio autocutsel dmenu pavucontrol
-$ yaourt alsamixer
+$ yaourt alsamixer              # 声音调节
 $ sudo pacman -S conky          # 这个软件作者没写，也需要安装(for i3bar, monitor)
 $ git clone https://github.com/meskarune/i3lock-fancy.git # 这个是锁屏
 ```
 
-# 6. Zsh
+# 6. [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
 
 ```sh
 $ pacman -S zsh
-sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+$ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 ```
 
 # 7. 字体
+
+## [Powerline](https://github.com/powerline/fonts)
 
 ```sh
 $ git clone https://github.com/powerline/fonts.git
@@ -233,5 +236,5 @@ $ pacman -S fcitx-im fcitx-configtool
 $ pacman -S fcitx-sunpinyin fcitx-cloudpinyin fcitx-sogoupinyin # 各种输入法
 ```
 
-https://wiki.archlinux.org/index.php/Fcitx_(简体中文)
+ref: [Fcitx - Arch Linux](https://wiki.archlinux.org/index.php/Fcitx)
 -------------------------------------------------------------------------------
