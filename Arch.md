@@ -47,7 +47,7 @@ $ mv /dev/disk/by-label/YOUR_LABEL /dev/disk/by-label/ARCH_XXXX  # XXXX 为引�
 # cat mirrorlist >> mr && mv mr mirrorlist
 ```
 
-## 5. 安装基本系统（网速慢的话就不要安装了）
+## 5. 安装基本系统
 
 ```sh
 # pacstrap -i /mnt base base-devel
@@ -67,7 +67,6 @@ $ mv /dev/disk/by-label/YOUR_LABEL /dev/disk/by-label/ARCH_XXXX  # XXXX 为引�
 # vi /etc/locale.gen                            # 打开 en_US.UTF-8, zh_CN.UTF-8
 # locale-gen                                    # 生成区域
 # echo LANG=en_US.UTF-8 > /etc/locale.conf      # 不安装桌面
-# echo LANG=zh_CN.UTF-8 > /etc/locale.conf      # 安装桌面
 
 # ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime   # 配置时区
 # echo ArchLinux > /etc/hostname
@@ -89,7 +88,7 @@ $ mv /dev/disk/by-label/YOUR_LABEL /dev/disk/by-label/ARCH_XXXX  # XXXX 为引�
 当分不清是使用 *grub-legacy* 还是 *efi* 时，用以下方法查找 **Windows 10** 安装在何处，并逐个进入查看，通常默认安装在(hd0,1)
 
 ```sh
-$ sudo vi /etc/grub.d/40_custom                 # 在文件中增加如下内容
+# vi /etc/grub.d/40_custom                      # 在文件中增加如下内容
 ```
 
     menuentry "Microsoft Windows 10 - 1" {      # 通常默认就是这个
@@ -106,8 +105,8 @@ $ sudo vi /etc/grub.d/40_custom                 # 在文件中增加如下内容
     }
 
 ```sh
-$ sudo grub-mkconfig -o /boot/grub/grub.cfg     # 重新生成grub引导
-$ sudo reboot
+# grub-mkconfig -o /boot/grub/grub.cfg     # 重新生成grub引导
+# reboot
 ```
 
 参考资料: [Dual-boot archlinux and Windows 7 using grub-bios](https://superuser.com/questions/528975/dual-boot-archlinux-and-windows-7-using-grub-bios)
@@ -119,9 +118,10 @@ $ sudo reboot
 ## 1. 添加用户
 
 ```sh
-$ useradd -m fanbin
-$ passwd fanbin
-$ visudo                                        # 增加权限
+# useradd -m fanbin
+# passwd
+# visudo                                        # 增加权限
+# exit                                          # 退出并切换用户
 ```
 
 ## 2. 装 X
@@ -154,10 +154,10 @@ $ sudo pacman -Sy archlinuxcn-keyring yaourt
 ### 工具
 
 ```sh
-$ sudo pacman -S gcc gdb                        # gcc gdb
-$ sudo pacman -S cgdb                           # cgdb
+$ sudo pacman -S gcc gdb                            # gcc gdb
+$ sudo pacman -S cgdb                               # cgdb
 $ sudo pacman -S vim ctags cscope
-$ sudo pacman -S automake autoconf m4 perl libtool # make 套件
+$ sudo pacman -S automake autoconf m4 perl libtool  # make 套件
 $ sudo pacman -S git svn
 $ sudo pacman -S wget curl
 ```
@@ -167,7 +167,7 @@ $ sudo pacman -S wget curl
 ```sh
 $ sudo pacman -S php python go lua
 $ sudo pacman -S nginx php-fpm
-$ sudo pacman nodejs npm yarn                   # for web dev
+$ sudo pacman nodejs npm yarn
 ```
 
 ### APP
@@ -210,10 +210,10 @@ $ yaourt mycli                       # https://github.com/dbcli/mycli（安装�
 
 ```sh
 $ sudo pacman -S i3                  # i3 window manager(i3-wm, i3blocks, i3lock, i3status)
-$ sudo pacman -S udiskie             # device automounting
-$ sudo pacman -S autocutsel          # clipboard synchroniation
 $ sudo pacman -S dmenu               # Launcher
 $ sudo pacman -S conky               # monitor
+$ sudo pacman -S udiskie             # device automounting
+$ sudo pacman -S autocutsel          # clipboard synchroniation
 $ yaourt i3lock-fancy-git            # 更美观的锁屏
 
     git clone https://github.com/meskarune/i3lock-fancy.git
@@ -222,7 +222,15 @@ $ yaourt i3lock-fancy-git            # 更美观的锁屏
 
 ```
 
-用我的配置替换 *ivyl/i3-config* 的配置
+用我的配置替换 *ivyl/i3-config* 的配置(TODO)
+
+参考资料: 
+* [i3](https://i3wm.org/) - improved tiling wm
+* [i3-gaps](https://github.com/Airblader/i3) - i3 with more features
+* [i3lock-fancy](https://github.com/meskarune/i3lock-fancy) - blurs the background and adds a lock icon and text
+* [st](http://st.suckless.org/) - st is simple terminal implementation for X
+* [conky](https://github.com/brndnmtthws/conky) - light-weight system monitor for X
+* [dmenu](http://tools.suckless.org/dmenu/) - dmenu is a dynamic menu for X
 
 ## 6. [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
 
@@ -244,6 +252,8 @@ $ sudo pacman -S wqy-zenhei wqy-microhei                # 其他字体
 $ fc-cache -vf                                          # 刷新字体缓存
 $ fc-match                                              # 查看当前默认字体
 ```
+
+参考资料: [Powerline](https://github.com/powerline/fonts) - patched fonts for Powerline users
 
 ## 8. 输入法
 
