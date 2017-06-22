@@ -173,10 +173,16 @@ $ sudo pacman nodejs npm yarn                   # for web dev
 
 ```sh
 $ sudo pacman -S firefox                        # Firefox（推荐）
-$ yaourt google-chrome                          # Chrome
 $ sudo pacman -S thunderbird                    # 邮件客户端
+$ yaourt alsamixer                              # 声音调节
+$ yaourt google-chrome                          # Chrome
+
 $ sudo pacman -S virtualbox
+$ sudo modprobe vboxdrv
+$ sudo depmod -a
 ```
+
+ref: [VirtualBox - Arch Wiki](https://wiki.archlinux.org/index.php/VirtualBox)
 
 ## 神器
 
@@ -184,17 +190,17 @@ $ sudo pacman -S virtualbox
 $ sudo pacman -S tmux
 $ sudo pacman -S tig                 # https://github.com/jonas/tig
 $ sudo pacman -S the_silver_searcher # https://github.com/ggreer/the_silver_searcher
-$ yaourt mycli                       # https://github.com/dbcli/mycli（安装过程比较慢）
 $ sudo pacman -S fzf                 # https://github.com/junegunn/fzf (git install)
 $ sudo pacman -S htop                # https://hisham.hm/htop/
 $ sudo pacman -S axel                # http://axel.alioth.debian.org/
 $ sudo pacman -S cloc                # http://cloc.sourceforge.net/
 $ sudo pacman -S thefuck             # https://github.com/nvbn/thefuck
-$ yaourt tldr                        # https://github.com/tldr-pages/tldr
 $ sudo pacman -S httpie              # https://httpie.org/
 $ sudo pacman -S jq                  # https://stedolan.github.io/jq/
-$ yaourt netease-musicbox-git        # https://github.com/darknessomi/musicbox
 $ sudo pacman -S tree
+$ yaourt tldr                        # https://github.com/tldr-pages/tldr
+$ yaourt netease-musicbox-git        # https://github.com/darknessomi/musicbox
+$ yaourt mycli                       # https://github.com/dbcli/mycli（安装过程比较慢）
 ```
 
 # 5. i3 + st + conky
@@ -216,10 +222,6 @@ $ yaourt i3lock-fancy-git            # 更美观的锁屏
 ```
 
 用我的配置替换 *ivyl/i3-config* 的配置
-
-```sh
-$ yaourt alsamixer              # 声音调节
-```
 
 # 6. [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
 
