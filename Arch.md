@@ -110,6 +110,7 @@ $ mv /dev/disk/by-label/YOUR_LABEL /dev/disk/by-label/ARCH_XXXX  # XXXX 为引�
 ```
 
 参考资料: [Dual-boot archlinux and Windows 7 using grub-bios](https://superuser.com/questions/528975/dual-boot-archlinux-and-windows-7-using-grub-bios)
+
 -------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------
@@ -151,7 +152,7 @@ $ sudo pacman -Sy archlinuxcn-keyring yaourt
 
 ## 4. 基本软件（根据个人爱好安装）
 
-### 工具
+### 4.1 工具
 
 ```sh
 $ sudo pacman -S gcc gdb                            # gcc gdb
@@ -162,7 +163,7 @@ $ sudo pacman -S git svn
 $ sudo pacman -S wget curl
 ```
 
-### 开发环境&语言
+### 4.2 开发环境&语言
 
 ```sh
 $ sudo pacman -S php python go lua
@@ -170,22 +171,33 @@ $ sudo pacman -S nginx php-fpm
 $ sudo pacman nodejs npm yarn
 ```
 
-### APP
+### 4.3 APP
 
 ```sh
 $ sudo pacman -S firefox                        # Firefox（推荐）
 $ sudo pacman -S thunderbird                    # 邮件客户端
-$ yaourt alsamixer                              # 声音调节
+$ sudo pacman -S evince                         # PDF viwer
 $ yaourt google-chrome                          # Chrome
+$ yaourt netease-musicbox-git                   # https://github.com/darknessomi/musicbox
+$ yaourt wps-office                             # WPS OFFICE（办公套件）
 
-$ sudo pacman -S virtualbox
+$ sudo pacman -S virtualbox-host-modules-arch   # VirtualBox
 $ sudo modprobe vboxdrv
 $ sudo depmod -a
+
+$ sudo pacman -S xrandr                         # 屏幕设置及扩展屏幕
+$ sudo pacman -S arandr                         # xrandr GUI
+
+$ yaourt gnome-alsamixer                        # 声音调节 GUI
+$ sudo pacman -S xf86-input-synaptics           # 笔记本触摸板驱动
 ```
 
-参考资料: [VirtualBox - Arch Wiki](https://wiki.archlinux.org/index.php/VirtualBox)
+参考资料: 
+* [VirtualBox - Arch Wiki](https://wiki.archlinux.org/index.php/VirtualBox)
+* [Xrandr - Arch Wiki](https://wiki.archlinux.org/index.php/Xrandr)
+* [Touchpad Synaptics](https://wiki.archlinux.org/index.php/Touchpad_Synaptics)
 
-### 神器
+### 4.4 神器
 
 ```sh
 $ sudo pacman -S tmux
@@ -200,7 +212,6 @@ $ sudo pacman -S httpie              # https://httpie.org/
 $ sudo pacman -S jq                  # https://stedolan.github.io/jq/
 $ sudo pacman -S tree
 $ yaourt tldr                        # https://github.com/tldr-pages/tldr
-$ yaourt netease-musicbox-git        # https://github.com/darknessomi/musicbox
 $ yaourt mycli                       # https://github.com/dbcli/mycli（安装过程比较慢）
 ```
 
@@ -240,8 +251,6 @@ $ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/insta
 ```
 
 ## 7. 字体（自选）
-
-### [Powerline](https://github.com/powerline/fonts)
 
 ```sh
 $ git clone https://github.com/powerline/fonts.git
