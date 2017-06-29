@@ -243,6 +243,20 @@ $ yaourt i3lock-fancy-git            # 更美观的锁屏
 * [conky](https://github.com/brndnmtthws/conky) - light-weight system monitor for X
 * [dmenu](http://tools.suckless.org/dmenu/) - dmenu is a dynamic menu for X
 
+*i3-wm* 透明：
+
+```sh
+$ sudo pacman -S xcompmgr
+$ sudo pacman -S transset-df        # 使用transset-df设置透明度
+$ xcompmgr -c
+
+$ sudo pacman -S xapps              # 待验证
+```
+
+参考资料：
+* [Xorg打开透明功能](http://www.phpfans.net/ask/fansa1/1657731430.html)
+* [Per-application transparency](https://wiki.archlinux.org/index.php/Per-application_transparency)
+
 ## 6. [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
 
 ```sh
