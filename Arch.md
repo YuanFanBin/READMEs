@@ -157,7 +157,9 @@ $ sudo pacman -Sy archlinuxcn-keyring yaourt
 ```sh
 $ sudo pacman -S gcc gdb                            # gcc gdb
 $ sudo pacman -S cgdb                               # cgdb
-$ sudo pacman -S vim ctags cscope
+$ sudo pacman -S vim
+$ sudo pacman -S ctags                              # 查找定义
+$ sudo pacman -S cscope                             # 查找静态调用
 $ sudo pacman -S automake autoconf m4 perl libtool  # make 套件
 $ sudo pacman -S git svn
 $ sudo pacman -S wget curl
@@ -180,6 +182,7 @@ $ sudo pacman -S evince                         # PDF viwer
 $ yaourt google-chrome                          # Chrome
 $ yaourt netease-musicbox-git                   # https://github.com/darknessomi/musicbox
 $ yaourt wps-office                             # WPS OFFICE（办公套件）
+$ yaourt youcompleteme                          # YouCompleteMe
 
 $ sudo pacman -S virtualbox-host-modules-arch   # VirtualBox
 $ sudo modprobe vboxdrv
