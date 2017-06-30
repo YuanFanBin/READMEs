@@ -267,7 +267,16 @@ $ pacman -S zsh
 $ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 ```
 
-## 7. 字体（自选）
+## 7. [oh-my-tmux](https://github.com/gpakosz/.tmux)
+
+```sh
+$ cd
+$ git clone https://github.com/gpakosz/.tmux.git
+$ ln -s -f .tmux/.tmux.conf
+$ cp .tmux/.tmux.conf.local .
+```
+
+## 8. 字体（自选）
 
 ```sh
 $ git clone https://github.com/powerline/fonts.git
@@ -281,7 +290,7 @@ $ fc-match                                              # 查看当前默认字�
 
 参考资料: [Powerline](https://github.com/powerline/fonts) - patched fonts for Powerline users
 
-## 8. 输入法
+## 9. 输入法
 
 ```sh
 $ sudo pacman -S fcitx-im fcitx-configtool
@@ -294,7 +303,7 @@ $ fcitx                                                 # 打开输入法
 
 参考资料：[fcitx - Arch Wiki](https://wiki.archlinux.org/index.php/Fcitx)
 
-## 9. Vim
+## 10. Vim
 
 使用我的 *Vim* 配置
 
@@ -311,7 +320,7 @@ $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 $ vim +PluginInstall +qall
 ```
 
-### 9.1 dotfile(杂七杂八)
+### 10.1 dotfile(杂七杂八)
 
 ```sh
 $ ln -s ~/.dotfile/.tigrc ~/.tigrc
@@ -319,7 +328,7 @@ $ ln -s ~/.dotfile/.ackrc ~/.ackrc
 $ ln -s ~/.dotfile/.tmux.conf ~/.tmux.conf
 ```
 
-## 10. Emacs([spaceemacs](https://github.com/syl20bnr/spacemacs))
+## 11. Emacs([spaceemacs](https://github.com/syl20bnr/spacemacs))
 
 TODO
 -------------------------------------------------------------------------------
