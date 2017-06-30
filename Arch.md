@@ -163,14 +163,40 @@ $ sudo pacman -S cscope                             # 查找静态调用
 $ sudo pacman -S automake autoconf m4 perl libtool  # make 套件
 $ sudo pacman -S git svn
 $ sudo pacman -S wget curl
+$ sudo pacman -S zip unzip
+$ sudo pacman -S acpi                               # 笔记本电池信息查看
 ```
 
 ### 4.2 开发环境&语言
 
 ```sh
-$ sudo pacman -S php python go lua
-$ sudo pacman -S nginx php-fpm
+$ sudo pacman -S python lua
 $ sudo pacman nodejs npm yarn
+```
+
+#### 4.2.1 Golang
+
+```sh
+$ sudo pacman -S go godef gocode
+$ vim ~/.xinitrc
+
+    export GOPATH=~/workspace/go/
+    export GOROOT=/usr/lib/go/
+    export PATH=$PATH:$GOPATH/bin
+
+$ go get -u PACKAGE
+$ go install PACKAGE
+```
+
+#### 4.2.2 php + php-fpm + nginx
+
+```sh
+$ sudo pacman -S php
+$ sudo pacman -S php-fpm
+$ sudo pacman -S nginx
+
+$ sudo systemctl start php-fpm
+$ sudo systemctl start nginx
 ```
 
 ### 4.3 APP
@@ -260,13 +286,14 @@ $ xcompmgr -c
 ## 6. [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
 
 ```sh
-$ pacman -S zsh
+$ sudo pacman -S zsh
 $ sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 ```
 
 ## 7. [oh-my-tmux](https://github.com/gpakosz/.tmux)
 
 ```sh
+$ sudo pacman -S tmux
 $ cd
 $ git clone https://github.com/gpakosz/.tmux.git
 $ ln -s -f .tmux/.tmux.conf
