@@ -1,5 +1,31 @@
 # cscope
 
+## vim
+
+```vim
+" ------------------------------------------------------------------------------
+" [cscope Setting]
+" --------------------------------------
+if has("cscope")
+    set csprg=/usr/bin/cscope
+    set csto=1
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+    set csverb
+endif
+
+nmap <LEADER>d :cs find g <cword><CR>       " 查找定义
+nmap <LEADER>s :cs find s <cword><CR>       " 查找symbol
+nmap <LEADER>c :cs find c <cword><CR>       " 查找calling
+```
+
+参考资料：
+* [程序员的利器 – cscope](http://easwy.com/blog/archives/advanced-vim-skills-cscope/)
+
 ## Golang
 
 ```sh
