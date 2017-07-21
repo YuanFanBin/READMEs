@@ -344,6 +344,8 @@ $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 $ vim +PluginInstall +qall
 ```
 
+[VimScript脚本语言学习](http://blog.csdn.net/smstong/article/details/20730587)
+
 ### 10.1 dotfile(杂七杂八)
 
 ```sh
