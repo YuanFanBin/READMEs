@@ -345,6 +345,7 @@ $ vim +PluginInstall +qall
 ```
 
 [VimScript脚本语言学习](http://blog.csdn.net/smstong/article/details/20730587)
+[VimScript编程指南](https://kenvifire.gitbooks.io/vimscript/content/about.html)
 
 ### 10.1 dotfile(杂七杂八)
 
