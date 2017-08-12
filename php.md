@@ -7,6 +7,8 @@
     * [2. Add extension](#2-add-extension)
     * [3. Test](#3-test)
 * [Arch PHP Extension](#arch-php-extension)
+    * [1. PHP5](#1-php5)
+    * [2. PHP7](#2-php7)
 * [PHP Yii2](#php-yii2)
 
 # Install
@@ -106,6 +108,20 @@ $ cd ./ext/EXTNAME && make test
 ```sh
 $ pacman -Ss php-
 ```
+
+## 1. PHP5
+- [PHP扩展开发：第一个扩展](http://kimi.it/496.html)
+- [用C/C++扩展你的PHP - Laruence](http://www.laruence.com/2009/04/28/719.html): PHP5 扩展
+- [TIPI](http://www.php-internals.com/): 深入理解PHP内核（暂不包含php7）
+- [PHP扩展开发及内核应用](http://www.cunmou.com/phpbook/index.md): 利于理解php5的源码结构
+
+## 2. PHP7
+- [深入理解PHP7之zval - Laruence](https://github.com/laruence/php7-internal/blob/master/zval.md)
+- [PHP5升级PHP7 - hongweipeng](https://www.hongweipeng.com/index.php/archives/1048/): [译]将PHP扩展从PHP5升级到PHP7
+- [php7 改为从栈上分配内在的思路](http://www.cnblogs.com/taek/p/5537172.html)
+- [PHP7扩展开发(三)：参数、数组和Zvals - weapon](https://segmentfault.com/a/1190000007575322)
+- [PHP7扩展开发之传参与返回值 - 淘宝信海龙](https://segmentfault.com/a/1190000008135824)
+- [php7扩展开发[6] 调试Segmentation fault](http://www.blogs8.cn/posts/WSJseaa)
 
 # PHP Yii2
 
