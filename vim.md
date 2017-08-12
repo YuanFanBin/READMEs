@@ -15,3 +15,7 @@ Golang开发环境
 使用Pathogen + Git管理vim插件（我用的不是这个）: 利用 `git submodule`
 
 * [Lost JavaScript - Pathogen + Git](http://lostjs.com/2012/02/04/use-pathogen-and-git-to-manage-vimfiles/)
+
+# VimScript
+
+[Learn Vimscript the Hard Way](http://learnvimscriptthehardway.stevelosh.com/)
