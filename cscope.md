@@ -24,7 +24,7 @@ nmap <LEADER>c :cs find c <cword><CR>       " 查找calling
 ```
 
 参考资料：
-* [程序员的利器 – cscope](http://easwy.com/blog/archives/advanced-vim-skills-cscope/)
+* [易水博客：程序员的利器 – cscope](http://easwy.com/blog/archives/advanced-vim-skills-cscope/)
 
 ## Golang
 
