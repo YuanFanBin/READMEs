@@ -242,6 +242,7 @@ $ sudo pacman -S jq                  # https://stedolan.github.io/jq/
 $ sudo pacman -S tree
 $ yaourt tldr                        # https://github.com/tldr-pages/tldr
 $ yaourt mycli                       # https://github.com/dbcli/mycli（安装过程比较慢）
+$ yaourt percol-git                  # https://github.com/mooz/percol
 
 $ # https://github.com/Xfennec/progress
 $ git clone https://github.com/Xfennec/progress.git; cd progress; make && sudo make install
