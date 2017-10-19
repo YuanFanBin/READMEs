@@ -50,3 +50,9 @@ $ go install github.com/go-redis/redis
 go get github.com/golang/mock/gomock
 go get github.com/golang/mock/mockgen
 ```
+
+### [parnurzeal/gorequest](https://github.com/parnurzeal/gorequest)
+
+```sh
+go get github.com/parnurzeal/gorequest
+```
