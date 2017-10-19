@@ -30,9 +30,23 @@ $ go get -u github.com/cihub/seelog
 $ go install github.com/cihub/seelog
 ```
 
+### [golang/glog](https://github.com/golang/glog)
+
+```sh
+$ go get -u https://github.com/golang/glog
+$ go install https://github.com/golang/glog
+```
+
 ### [go-redis/redis](https://github.com/go-redis/redis)
 
 ```sh
 $ go get -u github.com/go-redis/redis
 $ go install github.com/go-redis/redis
+```
+
+### [golang/gomock](https://github.com/golang/gomock)
+
+```sh
+go get github.com/golang/mock/gomock
+go get github.com/golang/mock/mockgen
 ```
