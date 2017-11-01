@@ -56,3 +56,13 @@ go get github.com/golang/mock/mockgen
 ```sh
 go get github.com/parnurzeal/gorequest
 ```
+
+## util
+
+记录从开源项目中的使用便捷的util或自己常用的util
+
+### [k8s](https://github.com/kubernetes)
+
+[RecoverFromPanic](https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/util/runtime/runtime.go#L151): panic中恢复，并打印堆栈
+[Runner](https://github.com/kubernetes/kubernetes/blob/master/pkg/util/async/runner.go): 异步执行一组func
+[Exponential Backoff](https://github.com/kubernetes/kubernetes/tree/master/pkg/util/goroutinemap): 指数回退算法Go实现及其用法
