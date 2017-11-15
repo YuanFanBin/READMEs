@@ -310,7 +310,7 @@ $ cp .tmux/.tmux.conf.local .
 $ git clone https://github.com/powerline/fonts.git
 $ cd fonts && ./install.sh && cd .. && rm -rf fonts
 
-$ sudo pacman -S ttf-dejavu                             # 安装字体(我的 `st` 用了此字体)
+$ sudo pacman -S ttf-dejavu                             # 安装字体(我的st用了此字体)
 $ sudo pacman -S wqy-zenhei wqy-microhei                # 其他字体
 $ fc-cache -vf                                          # 刷新字体缓存
 $ fc-match                                              # 查看当前默认字体
@@ -322,7 +322,7 @@ $ fc-match                                              # 查看当前默认字�
 
 ```sh
 $ sudo pacman -S fcitx-im fcitx-configtool
-$ sudo pacman -S fcitx-sunpinyin                        # 输入发
+$ sudo pacman -S fcitx-sunpinyin                        # 输入法
 $ sudo pacman -S fcitx-cloudpinyin fcitx-sogoupinyin    # 其他输入法
 $ fcitx                                                 # 打开输入法
 ```
