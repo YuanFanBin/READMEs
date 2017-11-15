@@ -59,10 +59,49 @@ go get github.com/parnurzeal/gorequest
 
 ## util
 
-记录从开源项目中的使用便捷的util或自己常用的util
+摘录从以下来源获得的util
+
+- 1. 开源项目
+- 2. 问答社区
+- 3. 个人项目
 
 ### [k8s](https://github.com/kubernetes)
 
 [RecoverFromPanic](https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/util/runtime/runtime.go#L151): panic中恢复，并打印堆栈
 [Runner](https://github.com/kubernetes/kubernetes/blob/master/pkg/util/async/runner.go): 异步执行一组func
 [Exponential Backoff](https://github.com/kubernetes/kubernetes/tree/master/pkg/util/goroutinemap): 指数回退算法Go实现及其用法
+
+### [StackOverflow](https://stackoverflow.com)
+
+[RandString](https://stackoverflow.com/questions/22892120/how-to-generate-a-random-string-of-a-fixed-length-in-golang): 随机字符串
+
+摘录部分源代码：
+
+```golang
+const (
+	letterBytes   = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ~@#%^&*(){}[]|"
+	letterIdxBits = 7                    // 7 bits to represent a letter index
+	letterIdxMask = 1<<letterIdxBits - 1 // All 1-bits, as many as letterIdxBits
+	letterIdxMax  = 63 / letterIdxBits   // # of letter indices fitting in 63 bits
+)
+
+var src = rand.NewSource(time.Now().UnixNano())
+
+// RandString 生成随机字符串
+func RandString(n int) string {
+	b := make([]byte, n)
+	// A src.Int63() generates 63 random bits, enough for letterIdxMax characters!
+	for i, cache, remain := n-1, src.Int63(), letterIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = src.Int63(), letterIdxMax
+		}
+		if idx := int(cache & letterIdxMask); idx < len(letterBytes) {
+			b[i] = letterBytes[idx]
+			i--
+		}
+		cache >>= letterIdxBits
+		remain--
+	}
+	return string(b)
+}
+```
