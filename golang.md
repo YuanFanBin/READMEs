@@ -1,16 +1,19 @@
 # Golang
 
-## 常用包
+## Web 框架
 
-### [labstack/echo](https://github.com/labstack/echo)
+- [labstack/echo](https://github.com/labstack/echo): [echo 官网](https://echo.labstack.com/)
+- [kataras/iris](https://github.com/kataras/iris): [iris 官网](https://iris-go.com/)
 
-```sh
-$ go get -u labstack/echo
-$ go install labstack/echo
-```
+资讯：
 
-相关资料：
-* [echo](https://echo.labstack.com/) - 官网
+[Top 6 web frameworks for Go as of 2017](https://dev.to/speedwheel/top-6-web-frameworks-for-go-as-of-2017-34i)
+
+## 微服务框架
+
+- [go-kit/kit](https://github.com/go-kit/kit)
+
+## 各种其他包
 
 ### [jinzhu/gorm](https://github.com/jinzhu/gorm)
 
@@ -56,10 +59,6 @@ go get github.com/golang/mock/mockgen
 ```sh
 go get github.com/parnurzeal/gorequest
 ```
-
-### [go-kit/kit](https://github.com/go-kit/kit)
-
-微服务框架
 
 ## util
 
