@@ -1,5 +1,13 @@
 # Golang
 
+## Golang建议
+
+[Go-advices](https://github.com/cristaloleg/go-advices)
+
+## Blog golang
+
+[Go Concurrency Patterns: Pipelines and cancellation](https://blog.golang.org/pipelines)
+
 ## Web 框架
 
 - [labstack/echo](https://github.com/labstack/echo): [echo 官网](https://echo.labstack.com/)
