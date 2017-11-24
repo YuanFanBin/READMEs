@@ -72,13 +72,11 @@ func main() {
 	// go worker(ctx, jobChan)
 	// time.Sleep(500 * time.Millisecond)
 
-    // #1, #2 虽然取消了，但可能丢弃掉了jobChan中的剩余任务
+	// #1, #2 虽然取消了，但可能丢弃掉了jobChan中的剩余任务
 }
 ```
 
-若想消费完成channel中数据后再执行退出操作需要这样做： `close(jobChan)` 这样可以
-让任务队列不再接收新任务，当前channel中任务利用 `for job := range jobChan {...}`
-即可全部读出
+若想消费完成channel中数据后再执行退出操作需要这样做： **`close(jobChan)`** 这样可以让任务队列不再接收新任务，当前channel中任务利用 **`for job := range jobChan {...}`** 即可全部读出
 
 ## Web 框架
 
