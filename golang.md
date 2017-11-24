@@ -82,6 +82,9 @@ func main() {
 
 #### [Golang Workers / Job Queue](https://gist.github.com/harlow/dbcd639cf8d396a2ab73)
 
+- [Handling 1 Million Requests per Minute with Go](http://marcio.io/2015/07/handling-1-million-requests-per-minute-with-golang/)**!!**
+- [Writing worker queues, in Go](http://nesv.github.io/golang/2014/02/25/worker-queues-in-go.html)
+
 ## Web 框架
 
 - [labstack/echo](https://github.com/labstack/echo): [echo 官网](https://echo.labstack.com/)
