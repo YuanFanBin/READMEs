@@ -4,9 +4,81 @@
 
 [Go-advices](https://github.com/cristaloleg/go-advices)
 
-## Blog golang
+## Blog
 
 [Go Concurrency Patterns: Pipelines and cancellation](https://blog.golang.org/pipelines)
+
+- [About When Not to Do Microservices](http://blog.christianposta.com/microservices/when-not-to-do-microservices/)
+    - [Low-risk Monolith to Microservice Evolution Part I](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution/)
+        - [Blue-green Deployments, A/B Testing, and Canary Releases](http://blog.christianposta.com/deploy/blue-green-deployments-a-b-testing-and-canary-releases/)
+    - [Low-risk Monolith to Microservice Evolution Part II](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution-part-ii/)
+    - [Low-risk Monolith to Microservice Evolution Part III](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution-part-iii/)
+
+[Golang Guide: A List of Top Golang Frameworks, IDEs & Tools](https://medium.com/@quintinglvr/golang-guide-a-list-of-top-golang-frameworks-ides-tools-e7c7866e96c9)
+
+#### [Golang 任务队列策略 -- 读《JOB QUEUES IN GO》](http://www.cnblogs.com/artong0416/p/7883381.html)
+
+阅读总结：
+
+```golang
+package main
+
+import (
+	"context"
+	"fmt"
+	"time"
+)
+
+func worker(ctx context.Context, jobChan <-chan int) {
+	for {
+		select {
+		case <-ctx.Done(): // 利用context.Context包的cancel功能
+			fmt.Println("ctx done")
+			return
+		case job := <-jobChan:
+			fmt.Printf("Job %d\n", job)
+			time.Sleep(100 * time.Millisecond)
+		}
+	}
+}
+
+func producer(jobChan chan<- int) {
+	for i := 1; i <= 100; i++ {
+		jobChan <- i
+	}
+	close(jobChan)
+}
+
+func main() {
+	var ctx context.Context
+	var cancel context.CancelFunc
+	jobChan := make(chan int, 100)
+
+	// #1 带有取消功能的 context
+	ctx, cancel = context.WithCancel(context.Background())
+	producer(jobChan)
+	go worker(ctx, jobChan)
+	select {
+	case <-time.After(500 * time.Millisecond):
+		cancel() // #1.1 这里也可以用channel来代替，不必使用context
+	}
+	time.Sleep(500 * time.Millisecond)
+
+	// #2 带有超时功能的 context
+	// ctx, cancel = context.WithDeadline(context.Background(), time.Now().Add(300*time.Millisecond))
+	// ctx, cancel = context.WithTimeout(context.Background(), 300*time.Millisecond)
+	// defer cancel()
+	// producer(jobChan)
+	// go worker(ctx, jobChan)
+	// time.Sleep(500 * time.Millisecond)
+
+    // #1, #2 虽然取消了，但可能丢弃掉了jobChan中的剩余任务
+}
+```
+
+若想消费完成channel中数据后再执行退出操作需要这样做： `close(jobChan)` 这样可以
+让任务队列不再接收新任务，当前channel中任务利用 `for job := range jobChan {...}`
+即可全部读出
 
 ## Web 框架
 
@@ -115,4 +187,15 @@ func RandString(n int) string {
 	}
 	return string(b)
 }
+```
+
+## misc
+
+[sync/atomic.Value](https://golang.org/pkg/sync/atomic/#Value): 轮询查询配置 - （应用点：线上debug日志开关）
+
+[Share memory by communicating; don't communicate by sharing memory.](https://golang.org/pkg/sync/atomic)
+
+```go
+// 确保SomeStruct满足接口SomeInterface的实现
+var _ SomeStruct = (*SomeInterface)(nil)
 ```
