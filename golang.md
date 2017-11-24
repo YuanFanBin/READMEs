@@ -1,8 +1,10 @@
 # Golang
 
-## Golang建议
+## Tips And Tricks
 
 [Go-advices](https://github.com/cristaloleg/go-advices)
+
+[Go的50度灰：Golang新开发者要注意的陷阱和常见错误](http://colobu.com/2015/09/07/gotchas-and-common-mistakes-in-go-golang/)
 
 ## Blog
 
@@ -77,6 +79,8 @@ func main() {
 ```
 
 若想消费完成channel中数据后再执行退出操作需要这样做： **`close(jobChan)`** 这样可以让任务队列不再接收新任务，当前channel中任务利用 **`for job := range jobChan {...}`** 即可全部读出
+
+#### [Golang Workers / Job Queue](https://gist.github.com/harlow/dbcd639cf8d396a2ab73)
 
 ## Web 框架
 
