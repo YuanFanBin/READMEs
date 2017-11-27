@@ -1,16 +1,26 @@
 # Golang
 
+## Video
+
+[Go Concurrency Patterns](https://www.youtube.com/watch?v=f6kdp27TYZs)
+[Advanced Go Concurrency Patterns](https://www.youtube.com/watch?v=QDDwwePbDtw&feature=youtu.be)
+
 ## Tips And Tricks
 
 [Go-advices](https://github.com/cristaloleg/go-advices)
 
 [Go的50度灰：Golang新开发者要注意的陷阱和常见错误](http://colobu.com/2015/09/07/gotchas-and-common-mistakes-in-go-golang/)
 
+[Rob Pike's 5 Rules of Programming](http://blog.codonomics.com/2017/09/rob-pikes-5-rules-of-programming.html)
+
+[Introduction to bufio package in Golang](https://medium.com/golangspec/introduction-to-bufio-package-in-golang-ad7d1877f762): ReadSlice**!**, ReadBytes**!!**
+    - [In-depth introduction to bufio.Scanner in Golang](https://medium.com/golangspec/in-depth-introduction-to-bufio-scanner-in-golang-55483bb689b4)
+
 ## Blog
 
 [Go Concurrency Patterns: Pipelines and cancellation](https://blog.golang.org/pipelines)
 
-- [About When Not to Do Microservices](http://blog.christianposta.com/microservices/when-not-to-do-microservices/)
+[About When Not to Do Microservices](http://blog.christianposta.com/microservices/when-not-to-do-microservices/)
     - [Low-risk Monolith to Microservice Evolution Part I](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution/)
         - [Blue-green Deployments, A/B Testing, and Canary Releases](http://blog.christianposta.com/deploy/blue-green-deployments-a-b-testing-and-canary-releases/)
     - [Low-risk Monolith to Microservice Evolution Part II](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution-part-ii/)
