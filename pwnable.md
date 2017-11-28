@@ -216,9 +216,9 @@ int main(int argc, char* argv[]){
 [0x00000530]>
 ```
 
-栈空间分配及内存泄露问题，以下记录可看出提供的二进制文件 `bof` 在栈上先为数组分配空间，再为入参分配空间，数组溢出即可篡改入参。
+栈空间分配及内存泄露问题，数组溢出即可篡改入参。
 
-```sh
+```asm
 $ r2 bof
 [0x00000530]> aaa
 ...
@@ -238,7 +238,7 @@ $ r2 bof
 [0x00000530]>
 ```
 
-由上分析可知，`0x8 - (0x2c) = 52` 即为 `key` 入参起始栈地址与 `overflowme` 数组起始栈地址之差，输入任意52个字节后，随后4个字节( `sizeof(int)` ) 对应的int值为 `0xcafebabe` 即可（注意大小端问题）
+由上分析可知，`0x8 - (-0x2c) = 52` 即为 `key` 入参起始栈地址与 `overflowme` 数组起始栈地址之差，输入任意52个字节后，随后4个字节( `sizeof(int)` ) 对应的int值为 `0xcafebabe` 即可（注意大小端问题）
 
 ```py
 #!/usr/bin/python2
@@ -260,4 +260,4 @@ $
 [*] Closed connection to pwnable.kr port 9000
 ```
 
-参考资料：[pwnable-collision](https://etenal.me/archives/972#C3)
+参考资料：[pwnable-bof](https://etenal.me/archives/972#C4)
