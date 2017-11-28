@@ -1,5 +1,9 @@
 ## [pwnable.kr](http://pwnable.kr/play.php)
 
+* [Toddler's Bottle]()
+    * [fd](#toddlers-bottle-fd)
+    * [collision](#toddlers-bottle-collision)
+
 #### Toddler's Bottle - fd
 
 ```sh
@@ -17,10 +21,10 @@ int main(int argc, char* argv[], char* envp[]){
         printf("pass argv[1] a number\n");
         return 0;
     }
-    int fd = atoi( argv[1] ) - 0x1234; // 文件描述符（0x1235）
+    int fd = atoi( argv[1] ) - 0x1234; // 文件描述符
     int len = 0;
     len = read(fd, buf, 32);           // 从fd中读取数据（这里理解为标准输入STDIN_FILENO即可）
-    if(!strcmp("LETMEWIN\n", buf)){    // 从fd中读到内容为'LETMEWIN'
+    if(!strcmp("LETMEWIN\n", buf)){    // 从fd中读到内容为'LETMEWIN\n'
         printf("good job :)\n");
         system("/bin/cat flag");
         exit(0);
@@ -43,7 +47,7 @@ mommy! I think I know what a file descriptor is!!
 
 ```sh
 $ ssh col@pwnable.kr -p2222 # guest
-fd@ubuntu:~$ cat col.c
+col@ubuntu:~$ cat col.c
 ```
 
 ```c
@@ -66,7 +70,7 @@ int main(int argc, char* argv[]){
         printf("usage : %s [passcode]\n", argv[0]);
         return 0;
     }
-    if(strlen(argv[1]) != 20){                  # 输入20字节
+    if(strlen(argv[1]) != 20){                  // 输入20字节
         printf("passcode length should be 20 bytes\n");
         return 0;
     }
