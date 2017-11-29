@@ -4,6 +4,7 @@
     * [fd](#toddlers-bottle---fd)
     * [collision](#toddlers-bottle---collision)
     * [bof](#toddlers-bottle---bof)
+    * [flag](#toddlers-bottle---flag)
 
 #### Toddler's Bottle - fd
 
@@ -261,3 +262,104 @@ $
 ```
 
 参考资料：[pwnable-bof](https://etenal.me/archives/972#C4)
+
+#### Toddler's Bottle - flag
+
+    Papa brought me a packed present! let's open it.
+
+    Download : http://pwnable.kr/bin/flag
+
+    This is reversing task. all you need is binary
+
+题意让分析一个二进制文件，这个文件是加过壳的。对反汇编&加壳&去壳并不熟悉，直接找已有资料，学习如何处理此题。
+
+参考 [\[Pwnable.kr\] flag](https://blog.yiz96.com/pwnable-flag/), [pwnable.kr flag - MtuucX](https://asciinema.org/a/111601)
+
+学习资料 [什么是加壳和脱壳技术？加壳和脱壳技术是什么意思？](http://blog.csdn.net/zhu2695/article/details/12208221), [Radare2逆向的正确姿势](http://www.mottoin.com/86269.html)
+
+分析：
+
+1. 尝试运行
+
+```sh
+$ wget http://pwnable.kr/bin/flag
+$ chmod +x flag
+$ ./flag
+I will malloc() and strcpy the flag there. take it.
+$ radare2 flag      # 没有什么可直接关注到的信息
+$ cgdb flag         # b main 并没有成功
+```
+
+2. 查看二进制文件 --> 找壳类型
+
+```sh
+$ strings flag | head -n 10     # 查看前10个可打印字符串
+UPX!
+@/x8
+gX lw_
+H/\_@
+        Kl$
+H9\$(t
+[]]y
+nIV,Uh
+AWAVAUATS
+uSL9
+$ strings flag | tail -n 10     # 查看最后10个可打印字符串
+;dl]tpR
+c3Rh
+2B)=
+1\a}
+_M]h
+Upbrk
+makBN
+su`"]R
+UPX!
+UPX!
+```
+
+`UPX!` 这个是一个关键词，说明原elf文件被加壳保护([UPX](https://upx.github.io/))，直接去壳，再重头分析
+
+3. 去壳 --> 还原为非壳二进制
+
+```sh
+$ upx -d flag -o unflag
+                       Ultimate Packer for eXecutables
+                          Copyright (C) 1996 - 2017
+UPX 3.94        Markus Oberhumer, Laszlo Molnar & John Reiser   May 12th 2017
+
+        File size         Ratio      Format      Name
+   --------------------   ------   -----------   -----------
+    883745 <-    335288   37.94%   linux/amd64   unflag
+
+Unpacked 1 file.
+```
+
+利用r2dare分析二进制，执行 `r2 -c=H unflag # 用浏览器查看反汇编内容`，找到 `main` 函数入口
+
+```asm
+...
+0x00401168      sub rsp, 0x10
+       ; 0x496658
+       ; "I will malloc() and strcpy the flag there. take it."
+0x0040116c      mov edi, str.I_will_malloc___and_strcpy_the_flag_there._take_it.
+...
+0x0040117b      call sym.malloc
+0x00401180      mov qword [rbp - 8], rax
+   ; [0x6c2070:8]=0x496628 str.UPX...__sounds_like_a_delivery_service_:_
+   ; "(fI"
+...
+```
+
+在 `main` 中我们可看到 `I will malloc() and strcpy the flag there. take it.` 我们在执行 `./flag` 时打印的内容，随后的 `call sym.malloc`, `mov qword [rbp -8], rax` 则调用库函数 `malloc` 动态分配内存空间，并将我们期望的 `flag` 拷贝过去。顺此思路我们找到地址 `0x496628`
+
+```asm
+...
+0x00496628      .string "UPX...? sounds like a delivery service :)" ; len=42
+...
+```
+
+DONE!
+
+4. 提交flag，验证结果
+
+**PS**: 看到一种取巧的查找方式，flag去壳后，直接 `$ strings unflag | grep ":)"` 就能找到（`:)` falg都会带的。。。。）
