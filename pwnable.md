@@ -5,8 +5,10 @@
     * [collision](#toddlers-bottle---collision)
     * [bof](#toddlers-bottle---bof)
     * [flag](#toddlers-bottle---flag)
+    * [passcode](#toddlers-bottle---passcode)
+    * [random](#toddlers-bottle---random)
 
-#### Toddler's Bottle - fd
+### Toddler's Bottle - fd
 
 ```sh
 $ ssh fd@pwnable.kr -p2222 # guest
@@ -45,7 +47,7 @@ mommy! I think I know what a file descriptor is!!
 
 扩展学习：[Standard streams](https://en.wikipedia.org/wiki/Standard_streams), [File descriptor](https://en.wikipedia.org/wiki/File_descriptor)
 
-#### Toddler's Bottle - collision
+### Toddler's Bottle - collision
 
 ```sh
 $ ssh col@pwnable.kr -p2222 # guest
@@ -138,7 +140,7 @@ daddy! I just managed to create a hash collision :)
 
 参考资料：[pwnable-collision](https://etenal.me/archives/972#C3)
 
-#### Toddler's Bottle - bof
+### Toddler's Bottle - bof
 
 ```c
 #include <stdio.h>
@@ -263,7 +265,7 @@ $
 
 参考资料：[pwnable-bof](https://etenal.me/archives/972#C4)
 
-#### Toddler's Bottle - flag
+### Toddler's Bottle - flag
 
     Papa brought me a packed present! let's open it.
 
@@ -363,3 +365,42 @@ DONE!
 4. 提交flag，验证结果
 
 **PS**: 看到一种取巧的查找方式，flag去壳后，直接 `$ strings unflag | grep ":)"` 就能找到（`:)` falg都会带的。。。。）
+
+### Toddler's Bottle - passcode
+
+TODO
+
+### Toddler's Bottle - random
+
+```c
+#include <stdio.h>
+
+int main(){
+    unsigned int random;
+    random = rand();        // random value!
+
+    unsigned int key=0;
+    scanf("%d", &key);
+
+    if( (key ^ random) == 0xdeadbeef ){
+        printf("Good!\n");
+        system("/bin/cat flag");
+        return 0;
+    }
+
+    printf("Wrong, maybe you should try 2^32 cases.\n");
+    return 0;
+}
+```
+
+这题很简单，实现没有加入随即种子，每次独立运行的第一个随机数都是 **1804289383**
+
+```sh
+$ python -c "print 0xdeadbeef ^ 1804289383"
+3039230856
+$ ssh fd@pwnable.kr -p2222 # guest
+random@ubuntu:~$ ./random
+3039230856
+Good!
+Mommy, I thought libc random is unpredictable...
+```
