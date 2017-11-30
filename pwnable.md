@@ -7,6 +7,7 @@
     * [flag](#toddlers-bottle---flag)
     * [passcode](#toddlers-bottle---passcode)
     * [random](#toddlers-bottle---random)
+    * [input](#toddlers-bottle---input)
 
 ### Toddler's Bottle - fd
 
@@ -404,3 +405,203 @@ random@ubuntu:~$ ./random
 Good!
 Mommy, I thought libc random is unpredictable...
 ```
+
+### Toddler's Bottle - input
+
+    Mom? how can I pass my input to a computer program?
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+
+int main(int argc, char* argv[], char* envp[]){
+        printf("Welcome to pwnable.kr\n");
+        printf("Let's see if you know how to give input to program\n");
+        printf("Just give me correct inputs then you will get the flag :)\n");
+
+        // argv
+        if(argc != 100) return 0;
+        if(strcmp(argv['A'],"\x00")) return 0;
+        if(strcmp(argv['B'],"\x20\x0a\x0d")) return 0;
+        printf("Stage 1 clear!\n");
+
+        // stdio
+        char buf[4];
+        read(0, buf, 4);
+        if(memcmp(buf, "\x00\x0a\x00\xff", 4)) return 0;
+        read(2, buf, 4);
+        if(memcmp(buf, "\x00\x0a\x02\xff", 4)) return 0;
+        printf("Stage 2 clear!\n");
+
+        // env
+        if(strcmp("\xca\xfe\xba\xbe", getenv("\xde\xad\xbe\xef"))) return 0;
+        printf("Stage 3 clear!\n");
+
+        // file
+        FILE* fp = fopen("\x0a", "r");
+        if(!fp) return 0;
+        if( fread(buf, 4, 1, fp)!=1 ) return 0;
+        if( memcmp(buf, "\x00\x00\x00\x00", 4) ) return 0;
+        fclose(fp);
+        printf("Stage 4 clear!\n");
+
+        // network
+        int sd, cd;
+        struct sockaddr_in saddr, caddr;
+        sd = socket(AF_INET, SOCK_STREAM, 0);
+        if(sd == -1){
+                printf("socket error, tell admin\n");
+                return 0;
+        }
+        saddr.sin_family = AF_INET;
+        saddr.sin_addr.s_addr = INADDR_ANY;
+        saddr.sin_port = htons( atoi(argv['C']) );
+        if(bind(sd, (struct sockaddr*)&saddr, sizeof(saddr)) < 0){
+                printf("bind error, use another port\n");
+                return 1;
+        }
+        listen(sd, 1);
+        int c = sizeof(struct sockaddr_in);
+        cd = accept(sd, (struct sockaddr *)&caddr, (socklen_t*)&c);
+        if(cd < 0){
+                printf("accept error, tell admin\n");
+                return 0;
+        }
+        if( recv(cd, buf, 4, 0) != 4 ) return 0;
+        if(memcmp(buf, "\xde\xad\xbe\xef", 4)) return 0;
+        printf("Stage 5 clear!\n");
+
+        // here's your flag
+        system("/bin/cat flag");
+        return 0;
+}
+```
+
+这题上来我就用python生成入参调试，连stage 1都过不去。。。。折腾了1个多小时。
+
+TODO: 回家后再做总结，分析
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string.h>
+#include <errno.h>
+
+int main(int argc, char* argv[], char* envp[]) {
+    int fd[2];
+    pid_t pid;
+
+    if (pipe(fd) < 0) {
+        printf("pipe error");
+        exit(0);
+    }
+    if ((pid = fork()) < 0) {
+        printf("fork error");
+        exit(0);
+    }
+    if (pid > 0) { /* parent */
+        // stage 2
+        close(fd[0]);
+        write(fd[1], "\x00\x0a\x00\xff\x00\x0a\x02\xff", 8);
+
+        sleep(2);
+
+        // stage 5
+        int sockfd;
+        if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
+            printf("socket error");
+            exit(0);
+        }
+        struct sockaddr_in srvaddr;
+        srvaddr.sin_family = AF_INET;
+        srvaddr.sin_port = htons(8888); // TODO
+        srvaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+        if (connect(sockfd, (struct sockaddr *)&srvaddr, sizeof(srvaddr)) < 0) {
+            printf("connect error, %s", strerror(errno));
+            exit(0);
+        }
+        char *buf = "\xde\xad\xbe\xef";
+        send(sockfd, buf, strlen(buf), 0);
+        close(sockfd);
+    } else { /* child */
+        // stage 1
+        char *c_argv[101] = {0};
+        for (int i = 0; i < 100; i++) {
+            c_argv[i] = "A";
+        }
+        argv[100] = NULL;
+        c_argv[0] = "/home/fanbin/workspace/pwn/input"; // TODO
+        c_argv['A'] = "\x00";
+        c_argv['B'] = "\x20\x0a\x0d";
+        c_argv['C'] = "8888"; // TODO
+
+        // stage 2
+        close(fd[1]);
+        if (dup2(fd[0], STDIN_FILENO) < 0) {
+            printf("dup2 STDIN_FILENO error");
+            exit(0);
+        }
+        if (dup2(fd[0], STDERR_FILENO) < 0) {
+            printf("dup2 STDERR_FILENO error");
+            exit(0);
+        }
+
+        // stage 3
+        char *c_envp[2] =  {"\xde\xad\xbe\xef=\xca\xfe\xba\xbe", NULL};
+
+        // stage 4
+        FILE *fp;
+        if ((fp = fopen("\x0a", "wb")) == NULL) {
+            printf("fopen error");
+            exit(0);
+        }
+        fwrite("\x00\x00\x00\x00", 4, sizeof(char), fp);
+        fclose(fp);
+
+        // execvpe
+        if (execvpe(c_argv[0], c_argv, c_envp) < 0) {
+            printf("execvpe error");
+            exit(0);
+        }
+
+        exit(0);
+    }
+    if (waitpid(pid, NULL, 0) != pid) { /* wait for child */
+        printf("waitpid error");
+    }
+    exit(0);
+}
+```
+
+在/tmp目录下创建一个自己的文件夹，将测试过代码放到创建的文件夹下编译，对原有的可执行文件做软链
+
+```sh
+input2@ubuntu:~$ cd /tmp; mkdir yuanfanbin; cd yuanfanbin
+input2@ubuntu:/tmp/yuanfanbin$ ln -s /home/input2/input .
+input2@ubuntu:/tmp/yuanfanbin$ ln -s /home/input2/flag .
+input2@ubuntu:/tmp/yuanfanbin$ gcc setinput.c
+input2@ubuntu:/tmp/yuanfanbin$ ls
+a.out  flag  input  setinput.c
+input2@ubuntu:/tmp/yuanfanbin$ ./a.out
+Welcome to pwnable.kr
+Let's see if you know how to give input to program
+Just give me correct inputs then you will get the flag :)
+Stage 1 clear!
+Stage 2 clear!
+Stage 3 clear!
+Stage 4 clear!
+Stage 5 clear!
+Mommy! I learned how to pass various input in Linux :)
+input2@ubuntu:/tmp/yuanfanbin$
+```
+
+参考资料：[pwnable.kr \[Toddler's Bottle\] - input](http://www.jianshu.com/p/e13f3bc26cd4)
