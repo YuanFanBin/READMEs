@@ -28,40 +28,119 @@
 
 [Golang Guide: A List of Top Golang Frameworks, IDEs & Tools](https://medium.com/@quintinglvr/golang-guide-a-list-of-top-golang-frameworks-ides-tools-e7c7866e96c9)
 
-#### [Go Defer Simplified with Practical Visuals](https://blog.learngoprogramming.com/golang-defer-simplified-77d3b2b817ff)
+#### [🐣 Go Funcs — Baby-Gopher’s Visual Guide - Inanc Gumus](https://blog.learngoprogramming.com/golang-funcs-params-named-result-values-types-pass-by-value-67f4374d9c0a)
+
+阅读总结：重点看一下 **Naming funcs** 这个小节
+
+摘录部分代码：
+
+```go
+// Be a Minimalist
+// Not this:
+func CheckProtocolIsFileTransferProtocol(protocolData io.Reader) bool
+// This:
+func Detect(in io.Reader) Name {
+  return FTP
+}
+// Not this:
+func CreateFromIncomingJSONBytes(incomingBytesSource []byte)
+// This:
+func NewFromJSON(src []byte)
+
+// Name in MixedCaps
+// This:
+func runServer()
+func RunServer()
+// Not this:
+func run_server()
+func RUN_SERVER()
+func RunSERVER()
+
+// Acronyms should be all uppercase:
+// Not this:
+func ServeHttp()
+// This:
+func ServerHTTP()
+
+// Choose descriptive param names
+// Not this:
+func encrypt(i1, a3, b2 byte) byte
+// This:
+func encrypt(privKey, pubKey, salt byte) byte
+// Not this:
+func Write(writableStream io.Writer, bytesToBeWritten []byte)
+// This:
+func Write(w io.Writer, s []byte)
+// Types make it clear, no need for the names
+
+// Use verbs
+// Not this:
+func mongo(h string) error
+// This:
+func connectMongo(host string) error
+// If it's in Mongo package, just:
+func connect(host string) error
+
+// Use is / are
+// Not this:
+func pop(new bool) item
+// This:
+func pop(isNew bool) item
+
+// Omit types in the name
+// Not this:
+func show(errorString string)
+// This:
+func show(err string)
+
+// Getters and Setters
+// Not this:
+func GetName() string
+// This:
+func Name() string
+// Not this:
+func Name() string
+// This:
+func SetName(name string)
+```
+
+
+#### [Go Defer Simplified with Practical Visuals - Inanc Gumus](https://blog.learngoprogramming.com/golang-defer-simplified-77d3b2b817ff)
 
 阅读总结：
 
-    **Defer Methods**
+```go
+type Car struct {
+	model string
+}
 
-    ```go
-    type Car struct {
-    	model string
-    }
-    
-    func (c Car) PrintModel() { 		// #1
-    // func (c *Car) PrintModel() { 	// #2
-    	fmt.Println(c.model)
-    }
-    func main() {
-    	c := Car{model: "DeLorean DMC-12"}
-    	defer c.PrintModel()
-    	c.model = "Chevrolet Impala"
-    }
-    ```
+func (c Car) PrintModel() { 		// #1
+// func (c *Car) PrintModel() { 	// #2
+	fmt.Println(c.model)
+}
+func main() {
+	c := Car{model: "DeLorean DMC-12"}
+	defer c.PrintModel()
+	c.model = "Chevrolet Impala"
+}
+```
 
-    ```sh
-    $ go run test.go    #1
-    Chevrolet Impala
-    $ go run test.go    #2
-    DeLorean DMC-12
-    ```
+```sh
+$ go run test.go    #1
+Chevrolet Impala
+$ go run test.go    #2
+DeLorean DMC-12
+```
 
-其他小节知识点都易理解，也不易出错。**Defer Methods** 小节知识需要对 **Method** 有所理解，指针接收(对象地址)与非指针接收(对象拷贝)所产生的行为不同。
+其他小节知识点都易理解，也不易出错。**Defer Methods** 小节知识需要对 **Method** 有所理解，指针接收（对象地址）与非指针接收（对象拷贝）所产生的行为不同。
 
 可以阅读一下 [The Zoo of Go Functions](https://blog.learngoprogramming.com/go-functions-overview-anonymous-closures-higher-order-deferred-concurrent-6799008dde7b) 这篇文章，加深对函数，方法，接口理解。
 
 拓展资料：[Defer, Panic, and Recover](https://blog.golang.org/defer-panic-and-recover), [The Zoo of Go Functions](https://blog.learngoprogramming.com/go-functions-overview-anonymous-closures-higher-order-deferred-concurrent-6799008dde7b), [★ Ultimate Guide to Go Variadic Functions](https://blog.learngoprogramming.com/golang-variadic-funcs-how-to-patterns-369408f19085)
+
+#### [The Zoo of Go Functions - Inanc Gumus](https://blog.learngoprogramming.com/go-functions-overview-anonymous-closures-higher-order-deferred-concurrent-6799008dde7b)
+
+阅读总结：
 
 #### [Golang 任务队列策略 -- 读《JOB QUEUES IN GO》](http://www.cnblogs.com/artong0416/p/7883381.html)
 
