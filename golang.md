@@ -28,6 +28,41 @@
 
 [Golang Guide: A List of Top Golang Frameworks, IDEs & Tools](https://medium.com/@quintinglvr/golang-guide-a-list-of-top-golang-frameworks-ides-tools-e7c7866e96c9)
 
+#### [Go Defer Simplified with Practical Visuals](https://blog.learngoprogramming.com/golang-defer-simplified-77d3b2b817ff)
+
+阅读总结：
+
+    **Defer Methods**
+
+    ```go
+    type Car struct {
+    	model string
+    }
+    
+    func (c Car) PrintModel() { 		// #1
+    // func (c *Car) PrintModel() { 	// #2
+    	fmt.Println(c.model)
+    }
+    func main() {
+    	c := Car{model: "DeLorean DMC-12"}
+    	defer c.PrintModel()
+    	c.model = "Chevrolet Impala"
+    }
+    ```
+
+    ```sh
+    $ go run test.go    #1
+    Chevrolet Impala
+    $ go run test.go    #2
+    DeLorean DMC-12
+    ```
+
+其他小节知识点都易理解，也不易出错。**Defer Methods** 小节知识需要对 **Method** 有所理解，指针接收(对象地址)与非指针接收(对象拷贝)所产生的行为不同。
+
+可以阅读一下 [The Zoo of Go Functions](https://blog.learngoprogramming.com/go-functions-overview-anonymous-closures-higher-order-deferred-concurrent-6799008dde7b) 这篇文章，加深对函数，方法，接口理解。
+
+拓展资料：[Defer, Panic, and Recover](https://blog.golang.org/defer-panic-and-recover), [The Zoo of Go Functions](https://blog.learngoprogramming.com/go-functions-overview-anonymous-closures-higher-order-deferred-concurrent-6799008dde7b), [★ Ultimate Guide to Go Variadic Functions](https://blog.learngoprogramming.com/golang-variadic-funcs-how-to-patterns-369408f19085)
+
 #### [Golang 任务队列策略 -- 读《JOB QUEUES IN GO》](http://www.cnblogs.com/artong0416/p/7883381.html)
 
 阅读总结：
