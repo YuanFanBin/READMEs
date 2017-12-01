@@ -8,6 +8,7 @@
     * [passcode](#toddlers-bottle---passcode)
     * [random](#toddlers-bottle---random)
     * [input](#toddlers-bottle---input)
+    * [mistake](#toddlers-bottle---mistake)
 
 ### Toddler's Bottle - fd
 
@@ -698,3 +699,81 @@ input2@ubuntu:/tmp/yuanfanbin$
 ```
 
 参考资料：[pwnable.kr \[Toddler's Bottle\] - input](http://www.jianshu.com/p/e13f3bc26cd4)
+
+    We all make mistakes, let's move on.
+    (don't take this too seriously, no fancy hacking skill is required at all)
+    
+    This task is based on real event
+    Thanks to dhmonkey
+    
+    hint : operator priority
+
+### Toddler's Bottle - mistake
+
+```c
+#include <stdio.h>
+#include <fcntl.h>
+
+#define PW_LEN 10
+#define XORKEY 1
+
+void xor(char* s, int len){
+        int i;
+        for(i=0; i<len; i++){
+                s[i] ^= XORKEY;
+        }
+}
+
+int main(int argc, char* argv[]){
+
+        int fd;
+        // 操作符优先级, 结果fd=0(STDIN_FILENO)
+        if(fd=open("/home/mistake/password",O_RDONLY,0400) < 0){
+                printf("can't open password %d\n", fd);
+                return 0;
+        }
+
+        printf("do not bruteforce...\n");
+        sleep(time(0)%20);
+
+        char pw_buf[PW_LEN+1];
+        int len;
+        // 从标准输入读入原始密码
+        if(!(len=read(fd,pw_buf,PW_LEN) > 0)){
+                printf("read error\n");
+                close(fd);
+                return 0;
+        }
+
+        char pw_buf2[PW_LEN+1];
+        printf("input password : ");
+        // 从标准输入读入目标密码
+        scanf("%10s", pw_buf2);
+
+        // xor your input
+        xor(pw_buf2, 10);
+
+        if(!strncmp(pw_buf, pw_buf2, PW_LEN)){
+                printf("Password OK\n");
+                system("/bin/cat flag\n");
+        }
+        else{
+                printf("Wrong Password\n");
+        }
+
+        close(fd);
+        return 0;
+}
+```
+
+这题有提示，仔细看一下就能解决问题
+
+```sh
+mistake@ubuntu:~$ ./mistake
+do not bruteforce...
+0000000000
+input password : 1111111111
+Password OK
+Mommy, the operator priority always confuses me :(
+mistake@ubuntu:~$
+```
