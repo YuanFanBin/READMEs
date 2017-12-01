@@ -480,9 +480,102 @@ int main(int argc, char* argv[], char* envp[]){
 }
 ```
 
-这题上来我就用python生成入参调试，连stage 1都过不去。。。。折腾了1个多小时。
+这题上来我就用python生成入参调试，连stage 1都过不去。。。。折腾了1个多小时，随后找了几个博主的解析才自己折腾出来。
 
-TODO: 回家后再做总结，分析
+OK，我们先来分析代码
+
+```c
+// argv
+if(argc != 100) return 0;
+if(strcmp(argv['A'],"\x00")) return 0;
+if(strcmp(argv['B'],"\x20\x0a\x0d")) return 0;
+printf("Stage 1 clear!\n");
+```
+
+**Stage 1**: 输入100个参数，其中 `argv['A']`(`argv[65]`) 为 `\x00`, `argv['B']`(`argv[66]`) 为 `\x20\x0a\x0d`
+
+知识点：[ASCII](https://zh.wikipedia.org/wiki/ASCII)，命令行参数（可参考 [APUE](https://github.com/YuanFanBin/learn/tree/master/apue) 7.4节）
+
+```c
+// stdio
+char buf[4];
+read(0, buf, 4);
+if(memcmp(buf, "\x00\x0a\x00\xff", 4)) return 0;
+read(2, buf, 4);
+if(memcmp(buf, "\x00\x0a\x02\xff", 4)) return 0;
+printf("Stage 2 clear!\n");
+```
+
+**Stage 2**: 从标准输入中读入 `\x00\x0a\x00\xff`，从标准错误中读入 `\x00\x0a\x02\xff`
+
+知识点：[File Descriptor](https://en.wikipedia.org/wiki/File_descriptor)
+
+```c
+// env
+if(strcmp("\xca\xfe\xba\xbe", getenv("\xde\xad\xbe\xef"))) return 0;
+printf("Stage 3 clear!\n");
+```
+
+**Stage 3**: 从环境变量中读入 `\xde\xad\xbe\xef` 所对应的值 `\xca\xfe\xba\xbe`
+
+知识点：环境变量（可参考 [APUE](https://github.com/YuanFanBin/learn/tree/master/apue) 7.5节）
+
+```c
+// file
+FILE* fp = fopen("\x0a", "r");
+if(!fp) return 0;
+if( fread(buf, 4, 1, fp)!=1 ) return 0;
+if( memcmp(buf, "\x00\x00\x00\x00", 4) ) return 0;
+fclose(fp);
+printf("Stage 4 clear!\n");
+```
+
+**Stage 4**:  从文件 `\x0a` 中读入 `\x00\x00\x00\x00` 四个字节
+
+知识点：文件读写
+
+```c
+// network
+int sd, cd;
+struct sockaddr_in saddr, caddr;
+sd = socket(AF_INET, SOCK_STREAM, 0);
+if(sd == -1){
+        printf("socket error, tell admin\n");
+        return 0;
+}
+saddr.sin_family = AF_INET;
+saddr.sin_addr.s_addr = INADDR_ANY;
+saddr.sin_port = htons( atoi(argv['C']) );
+if(bind(sd, (struct sockaddr*)&saddr, sizeof(saddr)) < 0){
+        printf("bind error, use another port\n");
+        return 1;
+}
+listen(sd, 1);
+int c = sizeof(struct sockaddr_in);
+cd = accept(sd, (struct sockaddr *)&caddr, (socklen_t*)&c);
+if(cd < 0){
+        printf("accept error, tell admin\n");
+        return 0;
+}
+if( recv(cd, buf, 4, 0) != 4 ) return 0;
+if(memcmp(buf, "\xde\xad\xbe\xef", 4)) return 0;
+printf("Stage 5 clear!\n");
+```
+
+**Stage 5**: TCP网络通信，绑定 `argv['C']` 所对应端口，侦听网络连接，并从TCP连接中读入 `\xde\xad\xbe\xef` 四个字节。
+
+知识点：网络-TCP/IP协议（可参考APUE, UNP）
+
+
+分析完5个阶段，我们再整体来看一下，**Stage 1**, **Stage 3** 都与进程启动相关，环境变量及入参。**Stage 2**, **Stage 4** 都与文件描述符相关，**Stage 5** 与网络有关，且该进程为 *server* 端。
+
+从 **Stage 5** 可看出，我们需要一个 *client* 端，涉及 *socket*, *connect*, *write* 几个函数，从 **Stage1, Stage3** 可看出我们需要 *fork*, exec函数族中的 *execvpe*, 从 **Stage 2, Stage 4** 可看出我们需要 *pipe*, *dup2*, *fopen*, *fwrite*, *fclose*, 以上内容都涉及到了进程之间通信的概念。
+
+利用 *fork* 函数，fork出一个子进程，子进程用于启动 **input**，并且为其构造 **argv**, **envp**, 同时需要将子进程的*STDIN_FILENO*, *STDERR_FILENO* dup2 到同一个文件描述符上（这里涉及子进程共用父进程资源知识点），还有exec知识点，摘录 [APUE](https://github.com/YuanFanBin/learn/tree/master/apue) 8.10小节内容
+
+    当进程调用一种 exec 函数时，该进程执行的程序完全替换为新程序，而新程序则从其 main 函数开始执行。因为调用 exec 并不创建新进程，所以前后的进程ID并未改变。exec 只是用磁盘上的一个新程序替换了当前进程的正文段、数据段、堆段和栈段。
+
+子进程需要从文件描述符中读入数据，那么我们可以利用 *pipe* 在父子进程之间通信，父进程写入管道，子进程从管道中读出数据，再将 *STDIN_FILENO*, *STDERR_FILENO* dup2 到子进程的管道的读端，**Stage 4** 需要从文件中读入数据，我们在 *execvp* 前优先写入一个文件 `\x0a` 并将指定数据写入文件。**Stage 5** 需要在父进程起 *client* 端，父进程通过TCP与 *server* 的指定端口通信，向其写入指定数据。
 
 ```c
 #include <stdio.h>
