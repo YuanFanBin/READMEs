@@ -5,9 +5,10 @@
     * [collision](#toddlers-bottle---collision)
     * [bof](#toddlers-bottle---bof)
     * [flag](#toddlers-bottle---flag)
-    * [passcode](#toddlers-bottle---passcode)
+    * [passcode-TODO](#toddlers-bottle---passcode)
     * [random](#toddlers-bottle---random)
     * [input](#toddlers-bottle---input)
+    * [leg-TODO](#toddlers-bottle---leg)
     * [mistake](#toddlers-bottle---mistake)
 
 ### Toddler's Bottle - fd
@@ -707,6 +708,10 @@ input2@ubuntu:/tmp/yuanfanbin$
     Thanks to dhmonkey
     
     hint : operator priority
+
+### Toddler's Bottle - leg
+
+TODO
 
 ### Toddler's Bottle - mistake
 
