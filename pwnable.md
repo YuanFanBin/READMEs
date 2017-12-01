@@ -11,6 +11,7 @@
     * [leg-TODO](#toddlers-bottle---leg)
     * [mistake](#toddlers-bottle---mistake)
     * [shellshock](#toddlers-bottle---shellshock)
+    * [coin1](#toddlers-bottle---coin1)
 
 ### Toddler's Bottle - fd
 
@@ -788,7 +789,7 @@ mistake@ubuntu:~$
 
 ```c
 #include <stdio.h>
-int main(){
+int main() {
     setresuid(getegid(), getegid(), getegid());
     setresgid(getegid(), getegid(), getegid());
     system("/home/shellshock/bash -c 'echo shock_me'");
@@ -805,3 +806,99 @@ Segmentation fault
 ```
 
 参考资料：[（十一）：pwnable-shellshock](https://etenal.me/archives/972#C11)
+
+### Toddler's Bottle - shellshock
+
+```sh
+➜  nc pwnable.kr 9007
+
+        ---------------------------------------------------
+        -              Shall we play a game?              -
+        ---------------------------------------------------
+
+        You have given some gold coins in your hand
+        however, there is one counterfeit coin among them
+        counterfeit coin looks exactly same as real coin
+        however, its weight is different from real one
+        real coin weighs 10, counterfeit coin weighes 9
+        help me to find the counterfeit coin with a scale
+        if you find 100 counterfeit coins, you will get reward :)
+        FYI, you have 30 seconds.
+
+        - How to play -
+        1. you get a number of coins (N) and number of chances (C)
+        2. then you specify a set of index numbers of coins to be weighed
+        3. you get the weight information
+        4. 2~3 repeats C time, then you give the answer
+
+        - Example -
+        [Server] N=4 C=2        # find counterfeit among 4 coins with 2 trial
+        [Client] 0 1            # weigh first and second coin
+        [Server] 20                     # scale result : 20
+        [Client] 3                      # weigh fourth coin
+        [Server] 10                     # scale result : 10
+        [Client] 2                      # counterfeit coin is third!
+        [Server] Correct!
+
+        - Ready? starting in 3 sec... -
+
+N=315 C=9
+```
+
+此题直接nc连入查看规则，看得出是一道简单的二分查找题，题不难，不过不知道怎么入手去提交解决方案。
+
+参考了参考资料中两位博主的连接方案，发现是需要用 *python* 的pwn模块，回顾之间的用法，自行实现了解决方案
+
+在本地跑任务，总是跑不到100次，20 ~ 30次超时失败了，又参考别人的解决办法才成功得到flag
+
+```py
+#!/bin/bash python2
+# -*- coding: UTF-8 -*-
+'''pwnable.kr - [Toddler's Bottle] coin1'''
+from pwn import *
+import re
+
+index = []
+for n in range(0, 10000):
+    index.append(str(n))
+
+pwn_socket = remote('pwnable.kr', 9007)         # 本地做容易超时，最好找一台内部机器执行
+print pwn_socket.read() # rule
+
+for i in range(100):
+    (n, c) = [int(d) for d in re.search(r'N=(\d+) C=(\d+)', pwn_socket.readline()).groups()]
+    print "N=", n, "C=", c
+
+    count = 0
+    l, r = 0, n
+    while l < r:
+        m = (l + r) >> 1
+        count += 1
+        if count > c:
+            pwn_socket.sendline(' '.join(index[l:m]))
+            weigh = pwn_socket.read()
+            break
+        pwn_socket.sendline(' '.join(index[l:m]))
+        weigh = pwn_socket.read()
+        if int(weigh) % 10 == 0:
+            l = m
+        else:
+            r = m + 1
+    print "OK, ", (i)
+
+print pwn_socket.read()
+```
+
+```sh
+$ ssh fd@pwnable.kr -p2222
+fd@ubuntu:/tmp/yuanfanbin$ cd /tmp; mkdir yuanfanbin; cd yuanfanbin; touch test.py
+fd@ubuntu:/tmp/yuanfanbin$ vim test.py      # 粘贴代码
+fd@ubuntu:/tmp/yuanfanbin$ python test.py
+...
+N= 656 C= 10
+OK,  99
+Congrats! get your flag
+b1NaRy_S34rch1nG_1s_3asy_p3asy
+```
+
+参考资料: [（十二）：pwnable-coin1](https://etenal.me/archives/972#C11), [pwnable 笔记 Toddler's Bottle - coin1](http://blog.csdn.net/smalosnail/article/details/53129001)
