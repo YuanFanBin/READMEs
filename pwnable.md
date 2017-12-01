@@ -12,6 +12,7 @@
     * [mistake](#toddlers-bottle---mistake)
     * [shellshock](#toddlers-bottle---shellshock)
     * [coin1](#toddlers-bottle---coin1)
+    * [blackjack](#toddlers-bottle---blackjack)
 
 ### 总结
 
@@ -906,3 +907,42 @@ b1NaRy_S34rch1nG_1s_3asy_p3asy
 ```
 
 参考资料: [pwnable coin1 - ETenal](https://etenal.me/archives/972#C11), [pwnable coin1 - TaQini852](http://blog.csdn.net/smalosnail/article/details/53129001)
+
+### Toddler's Bottle - blackjack
+
+找呀找呀找bug [simple blackjack program - saber1357](https://cboard.cprogramming.com/c-programming/114023-simple-blackjack-program.html)
+
+```c
+int betting() //Asks user amount to bet
+{
+    printf("\n\nEnter Bet: $");
+    scanf("%d", &bet);
+    
+    if (bet > cash) //If player tries to bet more money than player has
+    {
+        printf("\nYou cannot bet more money than you have.");
+        printf("\nEnter Bet: ");
+        scanf("%d", &bet);
+        return bet;
+    }
+    else return bet;
+} // End Function
+```
+
+```
+YaY_I_AM_A_MILLIONARE_LOL
+
+
+Cash: $1000500
+-------
+|S    |
+|  8  |
+|    S|
+-------
+
+Your Total is 8
+
+The Dealer Has a Total of 11
+
+Enter Bet: $
+```
