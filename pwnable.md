@@ -5,13 +5,17 @@
     * [collision](#toddlers-bottle---collision)
     * [bof](#toddlers-bottle---bof)
     * [flag](#toddlers-bottle---flag)
-    * [passcode-TODO](#toddlers-bottle---passcode)
+    * [TODO: passcode](#toddlers-bottle---passcode)
     * [random](#toddlers-bottle---random)
     * [input](#toddlers-bottle---input)
-    * [leg-TODO](#toddlers-bottle---leg)
+    * [TODO: leg](#toddlers-bottle---leg)
     * [mistake](#toddlers-bottle---mistake)
     * [shellshock](#toddlers-bottle---shellshock)
     * [coin1](#toddlers-bottle---coin1)
+
+### 总结
+
+pwnable.kr 中的题，除了遇到的每个独立问题外，还需要提升自己的 python - pwn 包应用，nc(NetCat) 命令的应用
 
 ### Toddler's Bottle - fd
 
@@ -143,7 +147,7 @@ daddy! I just managed to create a hash collision :)
 
 扩展学习：[Integer (computer science)](https://en.wikipedia.org/wiki/Integer_(computer_science))
 
-参考资料：[pwnable-collision](https://etenal.me/archives/972#C3)
+参考资料：[pwnable collision - ETenal](https://etenal.me/archives/972#C3)
 
 ### Toddler's Bottle - bof
 
@@ -268,7 +272,7 @@ $
 [*] Closed connection to pwnable.kr port 9000
 ```
 
-参考资料：[pwnable-bof](https://etenal.me/archives/972#C4)
+参考资料：[pwnable bof - ETenal](https://etenal.me/archives/972#C4)
 
 ### Toddler's Bottle - flag
 
@@ -805,7 +809,7 @@ only if I knew CVE-2014-6271 ten years ago..!!
 Segmentation fault
 ```
 
-参考资料：[（十一）：pwnable-shellshock](https://etenal.me/archives/972#C11)
+参考资料：[pwnable shellshock - ETenal](https://etenal.me/archives/972#C11)
 
 ### Toddler's Bottle - shellshock
 
@@ -901,4 +905,4 @@ Congrats! get your flag
 b1NaRy_S34rch1nG_1s_3asy_p3asy
 ```
 
-参考资料: [（十二）：pwnable-coin1](https://etenal.me/archives/972#C11), [pwnable 笔记 Toddler's Bottle - coin1](http://blog.csdn.net/smalosnail/article/details/53129001)
+参考资料: [pwnable coin1 - ETenal](https://etenal.me/archives/972#C11), [pwnable coin1 - TaQini852](http://blog.csdn.net/smalosnail/article/details/53129001)
