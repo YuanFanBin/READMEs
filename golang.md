@@ -254,6 +254,10 @@ func main() {
 - [Handling 1 Million Requests per Minute with Go](http://marcio.io/2015/07/handling-1-million-requests-per-minute-with-golang/)**!!**
 - [Writing worker queues, in Go](http://nesv.github.io/golang/2014/02/25/worker-queues-in-go.html)
 
+#### [Go语言中实现基于 event-loop 网络处理](http://colobu.com/2017/11/29/event-loop-networking-in-Go/)
+
+扩展：[tidwall/evio](https://github.com/tidwall/evio): Fast event-loop networking for Go, [valyala/fasthttp](https://github.com/valyala/fasthttp)
+
 ## Web 框架
 
 - [labstack/echo](https://github.com/labstack/echo): [echo 官网](https://echo.labstack.com/)
