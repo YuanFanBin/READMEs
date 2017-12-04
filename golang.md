@@ -1,5 +1,7 @@
 # Golang
 
+[The Go Programming Language Specification](https://golang.org/ref/spec)
+
 ## Video
 
 [Go Concurrency Patterns](https://www.youtube.com/watch?v=f6kdp27TYZs)
@@ -25,6 +27,8 @@
         - [Blue-green Deployments, A/B Testing, and Canary Releases](http://blog.christianposta.com/deploy/blue-green-deployments-a-b-testing-and-canary-releases/)
     - [Low-risk Monolith to Microservice Evolution Part II](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution-part-ii/)
     - [Low-risk Monolith to Microservice Evolution Part III](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution-part-iii/)
+
+同类问题：[小小的公共库，大大的耦合，你痛过吗？](https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&mid=2651960650&idx=1&sn=7c63fdc50a130e1d9fc3e5b6791ce01f&chksm=bd2d00968a5a89801861bd1665ad60fe240b5ff3d6eab984e70938d9cfd6502aca8de5686e0c&scene=25#wechat_redirect)
 
 [Golang Guide: A List of Top Golang Frameworks, IDEs & Tools](https://medium.com/@quintinglvr/golang-guide-a-list-of-top-golang-frameworks-ides-tools-e7c7866e96c9)
 
@@ -140,7 +144,48 @@ DeLorean DMC-12
 
 #### [The Zoo of Go Functions - Inanc Gumus](https://blog.learngoprogramming.com/go-functions-overview-anonymous-closures-higher-order-deferred-concurrent-6799008dde7b)
 
-阅读总结：
+阅读总结： Just Reading...
+
+#### [★ Ultimate Guide to Go Variadic Functions - Inanc Gumus](https://blog.learngoprogramming.com/golang-variadic-funcs-how-to-patterns-369408f19085)
+
+阅读总结：函数可变参数的应用( **...** )
+
+摘录几个例子
+
+1.
+
+```go
+func ToIP(parts ...byte) string {
+    parts = append(parts, make([]byte, 4-len(parts))...)
+    return fmt.Sprintf("%d.%d.%d.%d", 
+    parts[0], parts[1], parts[2], parts[3])
+}
+```
+
+```sh
+ToIP(255)   // 255.0.0.0
+ToIP(10, 1) // 10.1.0.0
+ToIP(127, 0, 0, 1) // 127.0.0.1
+```
+
+2.
+
+```go
+type formatter func(s string) string
+
+func format(s string, fmtrs ...formatter) string {
+  for _, fmtr := range fmtrs {
+    s = fmtr(s)
+  }
+  return s
+}
+
+format(" alan turing ", trim, last, strings.ToUpper)
+
+// output: TURING
+```
+
+拓展：[Variadic function](https://rosettacode.org/wiki/Variadic_function) - 各种语言的可变入参
 
 #### [Golang 任务队列策略 -- 读《JOB QUEUES IN GO》](http://www.cnblogs.com/artong0416/p/7883381.html)
 
