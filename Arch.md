@@ -47,11 +47,22 @@ $ mv /dev/disk/by-label/YOUR_LABEL /dev/disk/by-label/ARCH_XXXX  # XXXX 为引�
 # cat mirrorlist >> mr && mv mr mirrorlist
 ```
 
+`Server = http://mirrors.aliyun.com/archlinux/$repo/os/$arch`
+
 ## 5. 安装基本系统
 
 ```sh
 # pacstrap -i /mnt base base-devel
 ```
+
+若遇到 `signature from "..." is unknown trust` 问题，需要更新一下key，然后再次执行安装
+
+```sh
+# pacman-key --populate archlinux
+# pacman-key --refresh-keys
+```
+
+参考资料：[安裝 Arch Linux 發生錯誤 invalid of corrupted package (PGP signature)](http://jian-ching.blogspot.tw/2015/05/arch-linux-invalid-of-corrupted-package.html)
 
 ## 6. 生成fstab
 
@@ -120,7 +131,8 @@ $ mv /dev/disk/by-label/YOUR_LABEL /dev/disk/by-label/ARCH_XXXX  # XXXX 为引�
 
 ```sh
 # useradd -m fanbin
-# passwd
+# passwd                                        # 更改root用户密码
+# passwd fanbin                                 # 更改fanbin用户密码
 # visudo                                        # 增加权限
 # exit                                          # 退出并切换用户
 ```
@@ -267,6 +279,8 @@ $ yaourt i3lock-fancy-git            # 更美观的锁屏
     cd i3lock-fancy && sudo cp -r lock icons/ /usr/local/bin
     cd ../ && rm -rf i3lock-fancy-git
 
+$ git clone https://github.com/yuanfanbin/st st
+$ cd st; make && sudo make install
 ```
 
 用我的配置替换 *ivyl/i3-config* 的配置(TODO)
@@ -314,7 +328,7 @@ $ git clone https://github.com/powerline/fonts.git
 $ cd fonts && ./install.sh && cd .. && rm -rf fonts
 
 $ sudo pacman -S ttf-dejavu                             # 安装字体(我的st用了此字体)
-$ sudo pacman -S wqy-zenhei wqy-microhei                # 其他字体
+$ sudo pacman -S wqy-zenhei wqy-microhei                # 其他字体(终端中文)
 $ fc-cache -vf                                          # 刷新字体缓存
 $ fc-match                                              # 查看当前默认字体
 ```
