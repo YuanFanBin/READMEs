@@ -231,6 +231,9 @@ $ sudo pacman -S arandr                         # xrandr GUI
 
 $ yaourt gnome-alsamixer                        # 声音调节 GUI
 $ sudo pacman -S xf86-input-synaptics           # 笔记本触摸板驱动
+
+$ sudo pacman -S scrot                          # 截图工具
+$ sudo pacman -S feh                            # 图片管理工具
 ```
 
 参考资料: 
