@@ -261,6 +261,8 @@ $ yaourt percol-git                  # https://github.com/mooz/percol
 $ sudo pacman -S radare2             # 反汇编神器(aaa, afl, pdf @ sym.main)
                                      # 教程：http://www.mottoin.com/86269.html
                                      # r2 -c=H {your binary} 浏览器查看
+$ sudo pacman -S netcat              # http://netcat.sourceforge.net/
+                                     # The GNU Netcat: 网络工具瑞士军刀
 
 $ # https://github.com/Xfennec/progress
 $ git clone https://github.com/Xfennec/progress.git; cd progress; make && sudo make install
