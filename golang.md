@@ -377,3 +377,5 @@ func RandString(n int) string {
 // 确保SomeStruct满足接口SomeInterface的实现
 var _ SomeStruct = (*SomeInterface)(nil)
 ```
+
+[Go 1.9 sync.Map揭秘](http://colobu.com/2017/07/11/dive-into-sync-Map/)
