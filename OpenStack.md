@@ -27,3 +27,9 @@
 * [探索 OpenStack 之（16）：计量模块 Ceilometer 介绍及优化](http://www.cnblogs.com/sammyliu/p/4383289.html)
 * [如何基于Openstack telemetry项目实现云监控报警服务](http://www.infoq.com/cn/articles/how-to-implement-cloud-monitoring-alarm-service)
 * [OpenStack —— 计量服务Ceilometer(九)](http://blog.51cto.com/wzlinux/1964612)
+
+--------------------------------------------------------------------------------
+
+## 相关图片来源
+
+[OpenSatck官方文档](https://docs.openstack.org/)
