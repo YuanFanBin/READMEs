@@ -16,6 +16,7 @@
 [Rob Pike's 5 Rules of Programming](http://blog.codonomics.com/2017/09/rob-pikes-5-rules-of-programming.html)
 
 [Introduction to bufio package in Golang](https://medium.com/golangspec/introduction-to-bufio-package-in-golang-ad7d1877f762): ReadSlice**!**, ReadBytes**!!**
+
     - [In-depth introduction to bufio.Scanner in Golang](https://medium.com/golangspec/in-depth-introduction-to-bufio-scanner-in-golang-55483bb689b4)
 
 ## Blog
@@ -23,9 +24,13 @@
 [Go Concurrency Patterns: Pipelines and cancellation](https://blog.golang.org/pipelines)
 
 [About When Not to Do Microservices](http://blog.christianposta.com/microservices/when-not-to-do-microservices/)
+
     - [Low-risk Monolith to Microservice Evolution Part I](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution/)
+
         - [Blue-green Deployments, A/B Testing, and Canary Releases](http://blog.christianposta.com/deploy/blue-green-deployments-a-b-testing-and-canary-releases/)
+
     - [Low-risk Monolith to Microservice Evolution Part II](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution-part-ii/)
+
     - [Low-risk Monolith to Microservice Evolution Part III](http://blog.christianposta.com/microservices/low-risk-monolith-to-microservice-evolution-part-iii/)
 
 同类问题：[小小的公共库，大大的耦合，你痛过吗？](https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&mid=2651960650&idx=1&sn=7c63fdc50a130e1d9fc3e5b6791ce01f&chksm=bd2d00968a5a89801861bd1665ad60fe240b5ff3d6eab984e70938d9cfd6502aca8de5686e0c&scene=25#wechat_redirect)
@@ -261,6 +266,7 @@ func main() {
 ## Web 框架
 
 - [labstack/echo](https://github.com/labstack/echo): [echo 官网](https://echo.labstack.com/)
+
 - [kataras/iris](https://github.com/kataras/iris): [iris 官网](https://iris-go.com/)
 
 资讯：
@@ -318,6 +324,22 @@ go get github.com/golang/mock/mockgen
 go get github.com/parnurzeal/gorequest
 ```
 
+### [google/go-querystring](https://github.com/google/go-querystring)
+
+```go
+import "github.com/google/go-querystring/query"
+
+type Options struct {
+  Query   string `url:"q"`
+  ShowAll bool   `url:"all"`
+  Page    int    `url:"page"`
+}
+
+opt := Options{ "foo", true, 2 }
+v, _ := query.Values(opt)
+fmt.Print(v.Encode()) // will output: "q=foo&all=true&page=2"
+```
+
 ## util
 
 摘录从以下来源获得的util
@@ -329,7 +351,9 @@ go get github.com/parnurzeal/gorequest
 ### [k8s](https://github.com/kubernetes)
 
 [RecoverFromPanic](https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/util/runtime/runtime.go#L151): panic中恢复，并打印堆栈
+
 [Runner](https://github.com/kubernetes/kubernetes/blob/master/pkg/util/async/runner.go): 异步执行一组func
+
 [Exponential Backoff](https://github.com/kubernetes/kubernetes/tree/master/pkg/util/goroutinemap): 指数回退算法Go实现及其用法
 
 ### [StackOverflow](https://stackoverflow.com)

@@ -274,6 +274,7 @@ $ git clone https://github.com/Xfennec/progress.git; cd progress; make && sudo m
 
 ```sh
 $ sudo pacman -S i3                  # i3 window manager(i3-wm, i3blocks, i3lock, i3status)
+$ sudo pacman -S i3-gaps
 $ sudo pacman -S dmenu               # Launcher
 $ sudo pacman -S conky               # monitor
 $ sudo pacman -S udiskie             # device automounting

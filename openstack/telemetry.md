@@ -81,11 +81,11 @@ Gnocchi由如下3个服务组成：
 
 正如架构图所示，Gnocchi还需要3个后端存储组件。
 
-- 输入度量存储(An incoming measure storage)
+- 输入度量存储(An incoming measure storage)：新传入的度量数据
 
-- 聚合度量存储(An aggregated metric storage)
+- 聚合度量存储(An aggregated metric storage)：时间序列聚合数据
 
-- 索引存储(An index)
+- 索引存储(An index)：索引数据
 
 ### Gnocchi 后端存储(back-ends)
 
@@ -117,21 +117,15 @@ Gnocchi可以利用不同的存储系统来存储测量及汇总数据
 
 Gnocchi支持多种聚合方法：最大值，最小值，平均值，百分比，标准差等。
 
-Gnocchi 使用三种不同的后端来存储数据：
-
-- the incoming driver: 新传入的度量数据
-- the storage drvier: 时间序列聚合数据
-- the index driver: 索引数据
-
-通常前两种使用同样的后端存储
-
 ### Gnocchi 如何设置归档策略
 
 
 **时间序列数据库**
 
 [时间序列数据库的秘密（1）- 介绍](http://www.infoq.com/cn/articles/database-timestamp-01)
+
 [时间序列数据库的秘密（2）- 索引](http://www.infoq.com/cn/articles/database-timestamp-02)
+
 [时间序列数据库的秘密（3）- 加载和分布式计算](http://www.infoq.com/cn/articles/database-timestamp-03)
 
 --------------------------------------------------------------------------------
