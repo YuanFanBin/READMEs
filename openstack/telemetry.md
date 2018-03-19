@@ -48,22 +48,22 @@ Gnocchi采用独特的方法来存储时间序列数据：不是存储原生数�
 
 ### Gnocchi 支持的特性
 
-- **HTTP REST interface**
-- **Horizontal scalability**
-- **Metric aggregation**
-- **Measures batching support**
+- HTTP REST interface
+- Horizontal scalability
+- Metric aggregation
+- Measures batching support
 - Archiving policy
-- **Metric value search**
+- Metric value search
 - Structured resources
 - Resource history
 - Queryable resource indexer
 - Multi-tenant
 - Grafana support
-- Prometheus Remote Write support
+- [Prometheus](https://prometheus.io/) Remote Write support
 - Nagios/Icinga support
-- Statsd protocol support
-- Collectd plugin support
-- InfluxDB line protocol ingestion support
+- [Statsd](https://github.com/etsy/statsd/) protocol support
+- [Collectd](https://www.collectd.org/) plugin support
+- [InfluxDB](https://www.influxdata.com/) line protocol ingestion support
 
 ### Gnocchi 架构
 
