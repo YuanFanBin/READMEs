@@ -21,3 +21,12 @@ $ sudo systemctl start polipo
 $ export http_proxy="http://127.0.0.1:8123/"
 $ curl www.google.com
 ```
+
+## 注意事项
+
+服务器重启后，如下命令需重新执行：
+
+```sh
+$ sudo systemctl start shadowsocks@config.service
+$ export http_proxy="http://127.0.0.1:8213/"
+```
