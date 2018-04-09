@@ -37,7 +37,7 @@
 
 [Golang Guide: A List of Top Golang Frameworks, IDEs & Tools](https://medium.com/@quintinglvr/golang-guide-a-list-of-top-golang-frameworks-ides-tools-e7c7866e96c9)
 
-#### [🐣 Go Funcs — Baby-Gopher’s Visual Guide - Inanc Gumus](https://blog.learngoprogramming.com/golang-funcs-params-named-result-values-types-pass-by-value-67f4374d9c0a)
+#### [Go Funcs — Baby-Gopher’s Visual Guide - Inanc Gumus](https://blog.learngoprogramming.com/golang-funcs-params-named-result-values-types-pass-by-value-67f4374d9c0a)
 
 阅读总结：重点看一下 **Naming funcs** 这个小节
 
