@@ -403,3 +403,5 @@ var _ SomeStruct = (*SomeInterface)(nil)
 ```
 
 [Go 1.9 sync.Map揭秘](http://colobu.com/2017/07/11/dive-into-sync-Map/)
+
+[Go 1.10中值得关注的几个变化](https://tonybai.com/2018/02/17/some-changes-in-go-1-10/)
