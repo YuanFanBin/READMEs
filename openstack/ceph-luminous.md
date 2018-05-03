@@ -1,5 +1,12 @@
 # Ceph Luminous(12.2.4) 部署
 
+* [0.准备集群](#0准备集群)
+* [1.环境预检](#1环境预检)
+* [2.搭建集群](#2搭建集群)
+* [3.Dashboard配置](#3dashboard配置)
+* [4.pool创建及使用](#4pool创建及使用)
+* [参考资料](#参考资料)
+
 ## 0.准备集群
 
 vm: 3台 CentOS-7.2-x64(3.10.0-693.5.2.el7.x86\_64) 1核, 1G Mem, 20G SSD x 2
@@ -51,12 +58,13 @@ Host node2
 Host node3
     Hostname 10.0.4.15
     User search
+
 [search@node1 ~]$ chmod 0600 ~/.ssh/config
 [search@node1 ~]$ ssh-copy-id search@node2
 [search@node1 ~]$ ssh-copy-id search@node3
 ```
 
-## 1.环境预检验
+## 1.环境预检
 
 TODO: 防火墙设置
 
@@ -118,7 +126,7 @@ gpgkey=https://download.ceph.com/keys/release.asc
 
 ```sh
 [search@node1 ~]$ sudo yum install -y ceph-deploy
-[search@node1 ~]$ ceph-depoly --version
+[search@node1 ~]$ ceph-deploy --version
 2.0.0
 ```
 
@@ -139,9 +147,11 @@ gpgkey=https://download.ceph.com/keys/release.asc
 10.0.4.14       node1
 10.0.4.6        node2
 10.0.4.15       node3
+
 [search@node1 my-cluster]$ ceph-deploy new node1 node2 node3
 [search@node1 my-cluster]$ ls
 ceph.conf  ceph-deploy-ceph.log  ceph.mon.keyring
+
 [search@node1 my-cluster]$ cat ceph.conf     # 修改配置，添加public network
 [global]
 fsid = 57e12384-fd45-422b-bd0a-49da4149c1da
@@ -164,10 +174,13 @@ public network = 10.0.4.0/26        # add
 ```sh
 [search@node{1,2,3} ~]$ sudo yum install -y epel-release 
 [search@node{1,2,3} ~]$ sudo yum install -y ceph ceph-radosgw
+
 [search@node1 ~]$ ceph --version
 ceph version 12.2.4 (52085d5249a80c5f5121a76d6288429f35e4e77b) luminous (stable)
+
 [search@node2 ~]$ ceph --version
 ceph version 12.2.4 (52085d5249a80c5f5121a76d6288429f35e4e77b) luminous (stable)
+
 [search@node3 ~]$ ceph --version
 ceph version 12.2.4 (52085d5249a80c5f5121a76d6288429f35e4e77b) luminous (stable)
 ```
@@ -241,6 +254,7 @@ sdb
     objects: 0 objects, 0 bytes
     usage:   3164 MB used, 58263 MB / 61428 MB avail
     pgs:
+
 [search@node1 my-cluster]$ sudo ceph osd tree
 ID CLASS WEIGHT  TYPE NAME      STATUS REWEIGHT PRI-AFF
 -1       0.05846 root default
@@ -309,6 +323,30 @@ tcp6       0      0 :::7000                 :::*                    LISTEN      
 6) 打开 `http://192.168.20.52:7000` 面板
 
 ![ceph dashboard](img/dashboard.png)
+
+## 4.pool创建及使用
+
+```sh
+# 创建 pool
+[search@node1 my-cluster]$ sudo ceph osd pool create rbd 128 128
+[search@node1 my-cluster]$ sudo rbd pool init rbd
+
+# 删除 pool
+[search@node1 my-cluster]$ sudo ceph osd pool rm rbd rbd --yes-i-really-really-mean-it
+Error EPERM: pool deletion is disabled; you must first set the mon_allow_pool_delete config option to true before you
+can destroy a pool
+
+[search@node1 my-cluster]$ cat ceph.conf
+...
+mon_allow_pool_delete = true
+
+[search@node1 my-cluster]$ ceph-deploy --overwrite-conf config push node1
+[search@node1 my-cluster]$ ceph-deploy --overwrite-conf config push node2
+[search@node1 my-cluster]$ ceph-deploy --overwrite-conf config push node3
+
+[search@node{1,2,3} ~]$ sudo systemctl restart ceph-mon.targe       # 重启mon
+[search@node1 my-cluster]$ sudo ceph osd pool rm rbd rbd --yes-i-really-really-mean-it
+```
 
 ## 参考资料
 

@@ -405,3 +405,35 @@ var _ SomeStruct = (*SomeInterface)(nil)
 [Go 1.9 sync.Map揭秘](http://colobu.com/2017/07/11/dive-into-sync-Map/)
 
 [Go 1.10中值得关注的几个变化](https://tonybai.com/2018/02/17/some-changes-in-go-1-10/)
+
+#### SMTP
+
+发送163企业邮件
+
+```go
+package main
+
+import (
+    "fmt"
+    "net/smtp"
+    "strings"
+)
+
+func main() {
+    var (
+        auth         = smtp.PlainAuth("", "{username}@{company}.com", "{password}", "smtp.ym.163.com")
+        to           = []string{"{username}@{company}.com"}
+        nickname     = "test"
+        user         = "{username}@{company}.com"
+        subject      = "test mail"
+        contentType  = "Content-Type: text/plain; charset=UTF-8"
+        body         = "This is the email body."
+        msg          = []byte("To: " + strings.Join(to, ",") + "\r\nFrom: " + nickname + "<" + user + ">\r\nSubject: " + subject + "\r\n" + contentType + "\r\n\r\n" + body)
+    )
+    if err := smtp.SendMail("smtp.ym.163.com:25", auth, user, to, msg); err != nil {
+        fmt.Printf("send mail error: %v", err)
+    }
+}
+```
+
+参考资料：[不能使用服务器smtp.ym.163.com发送邮件](http://blog.sina.com.cn/s/blog_5fde60890101foqr.html)
