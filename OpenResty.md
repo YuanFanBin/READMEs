@@ -90,6 +90,9 @@ cjson.encode_empty_table_as_object(false) -- 关闭空表=>JSON对象
 cjson.encode(tb)        --> []
 ```
 
+[记一次踩坑|空table应该编码为数组还是对象](http://answerywj.com/2017/06/16/table-encode-as-array-or-object/)
+[编码为 array 还是 object](https://wiki.jikexueyuan.com/project/openresty-best-practice/array-or-object.html)
+
 2. lua中的坑
 
 lua中的数组（表）以索引 [1] 开始，并非其他语言中的 [0] 开始。
