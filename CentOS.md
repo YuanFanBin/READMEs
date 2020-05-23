@@ -70,6 +70,18 @@ yum makecache
 yum -y update
 ```
 
-4. https://github.com/YuanFanBin/READMEs/blob/master/Arch.md
+3. vim7.x 升级至 vim8.x
+```
+sudo yum -y remove vim
+cd ~/Download
+git clone https://github.com/vim/vim.git
+cd vim
+./configure --prefix=/usr/local/vim8/ --enable-pythoninterp=yes --with-python-config-dir=/usr/lib64/python2.7/config
+sudo make -j8
+sudo make install
+sudo ln -s /usr/local/vim8/bin/vim /usr/bin/vim
+```
 
-5. 
+资料: [CentOS7下vim7.4升级到vim8.2](https://www.cnblogs.com/wscsq789/p/12222634.html)
+
+4. https://github.com/YuanFanBin/READMEs/blob/master/Arch.md
